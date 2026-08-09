@@ -122,7 +122,20 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               }`}
             >
               <Cpu className="w-4 h-4 text-emerald-300 animate-pulse" />
-              <span>7. Modelo 1.8T Local Nativo</span>
+              <span>7. Modelo 7B Local Destilado</span>
+            </button>
+
+            <button
+              id="tab-lab"
+              onClick={() => setActiveTab('lab')}
+              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                activeTab === 'lab'
+                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'
+                  : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-500/30'
+              }`}
+            >
+              <GraduationCap className="w-4 h-4 text-indigo-300 animate-pulse" />
+              <span>8. Laboratorio de IA</span>
             </button>
           </nav>
 
@@ -134,7 +147,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="flex items-center space-x-1.5 text-xs font-bold text-emerald-300 bg-emerald-500/20 hover:bg-emerald-500/30 px-3 py-1.5 rounded-xl border border-emerald-500/40 transition-all cursor-pointer shadow-md shadow-emerald-500/10"
             >
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>🔥 Probar Modelo 1.8T Nativo</span>
+              <span>🔥 Probar Modelo 7B Destilado</span>
             </button>
           </div>
         </div>
@@ -148,7 +161,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               activeTab === 'nano1m' ? 'bg-emerald-500 text-slate-950' : 'text-emerald-300 bg-emerald-500/20 border border-emerald-500/30'
             }`}
           >
-            🔥 Modelo 1.8T Local
+            🔥 Modelo 7B Local
+          </button>
+          <button
+            id="mobile-tab-lab"
+            onClick={() => setActiveTab('lab')}
+            className={`px-3 py-1.5 rounded-md text-xs font-bold whitespace-nowrap ${
+              activeTab === 'lab' ? 'bg-indigo-600 text-white' : 'text-indigo-300 bg-indigo-500/20 border border-indigo-500/30'
+            }`}
+          >
+            🎓 Laboratorio de IA
           </button>
           <button
             id="mobile-tab-planner"
