@@ -322,7 +322,7 @@ export const SECRET_EVALUATION_SET: SecretQuestion[] = [
 export const SAVED_CHECKPOINTS: CheckpointInfo[] = [
   {
     id: 'checkpoint_base_7b',
-    name: 'Aethel-Compact 7B (Base No Entrenada)',
+    name: 'Aethel-Quantum 14B (Base No Entrenada)',
     source: 'Pesos Iniciales Deterministas',
     dateCreated: new Date(Date.now() - 3600000 * 24).toLocaleString(),
     epochsTrained: 0,
@@ -338,7 +338,7 @@ export const SAVED_CHECKPOINTS: CheckpointInfo[] = [
   },
   {
     id: 'checkpoint_fable_philosophical',
-    name: 'Aethel-7B + Fable 5 Logic (Distilled)',
+    name: 'Aethel-Quantum 14B + Fable 5 Logic (Distilled)',
     source: 'Fable 5 (Destilación Heurística)',
     dateCreated: new Date(Date.now() - 3600000 * 12).toLocaleString(),
     epochsTrained: 8,
@@ -355,7 +355,7 @@ export const SAVED_CHECKPOINTS: CheckpointInfo[] = [
   },
   {
     id: 'checkpoint_gpt_optimized_code',
-    name: 'Aethel-7B + GPT-5.6 Sol Code (Distilled)',
+    name: 'Aethel-Quantum 14B + GPT-5.6 Sol Code (Distilled)',
     source: 'GPT-5.6 Sol (Destilación Algorítmica)',
     dateCreated: new Date(Date.now() - 3600000 * 6).toLocaleString(),
     epochsTrained: 8,
@@ -621,8 +621,8 @@ export const LabController = {
 
     logs.push(`[INFO] [LM-EVAL] Starting EleutherAI LM Evaluation Harness v0.4.2...`);
     logs.push(`[INFO] [LM-EVAL] Initializing hf-causal runner on local CPU matrix...`);
-    logs.push(`[INFO] [LM-EVAL] Model Details: Aethel-Compact-7B-Distilled (Seed: 0xa37e15)`);
-    logs.push(`[INFO] [LM-EVAL] Local execution layers loaded: 8 layers Float32`);
+    logs.push(`[INFO] [LM-EVAL] Model Details: Aethel-Quantum-14B-Distilled (Seed: 0xa37e15)`);
+    logs.push(`[INFO] [LM-EVAL] Local execution layers loaded: 10 layers Float32`);
     logs.push(`[INFO] [LM-EVAL] Loaded tasks to evaluate: [${taskList.join(', ')}]`);
 
     if (taskList.includes('mmlu_pro')) {

@@ -344,7 +344,7 @@ export const ModelEvaluationLab: React.FC = () => {
               <Binary className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
               <span>Pipeline Automatizado de Aprendizaje y Evaluación Cuantitativa</span>
             </div>
-            <h2 className="text-2xl font-bold text-white">Laboratorio de Modelos e Inferencia Aethel-Compact</h2>
+            <h2 className="text-2xl font-bold text-white">Laboratorio de Modelos e Inferencia Aethel-Quantum</h2>
             <p className="text-xs text-slate-400 max-w-2xl">
               Entrena tu IA local con destilación de modelos de frontera, pásalo por exámenes con datos aislados (zero leakage) y simula el framework <strong>EleutherAI LM Evaluation Harness</strong>.
             </p>
@@ -893,7 +893,7 @@ export const ModelEvaluationLab: React.FC = () => {
                   <span>EleutherAI LM Evaluation Harness Runner</span>
                 </h3>
                 <p className="text-[11px] text-slate-400">
-                  Ejecuta evaluaciones estandarizadas académicas para tu modelo de pesos locales Aethel-Compact 7B.
+                  Ejecuta evaluaciones estandarizadas académicas para tu modelo de pesos locales Aethel-Quantum 14B.
                 </p>
               </div>
 
@@ -944,7 +944,7 @@ export const ModelEvaluationLab: React.FC = () => {
               <span className="text-[10px] font-bold text-slate-400 font-mono uppercase block">Sintaxis CLI de EleutherAI Harness:</span>
               <div className="flex bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-xs items-center justify-between text-emerald-400">
                 <span>
-                  lm_eval run --model hf --model_args pretrained=Aethel-Compact-7B --tasks {selectedTasks.join(',')}
+                  lm_eval run --model hf --model_args pretrained=Aethel-Quantum-14B --tasks {selectedTasks.join(',')}
                 </span>
                 <button
                   onClick={handleRunHarness}
