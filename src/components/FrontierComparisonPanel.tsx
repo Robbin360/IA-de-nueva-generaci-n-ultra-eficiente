@@ -90,7 +90,12 @@ export const FrontierComparisonPanel: React.FC = () => {
       setProgress(80);
       setStatusText('Procesando métricas de latencia, precisión, velocidad de tokens y eficiencia de memoria...');
 
-      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(`Respuesta del servidor (${res.status})`);
+      }
+
+      const responseText = await res.text();
+      const data = responseText ? JSON.parse(responseText) : {};
 
       if (data.results) {
         setTestResults(data.results);
@@ -191,7 +196,7 @@ export const FrontierComparisonPanel: React.FC = () => {
           >
             <option value="gpt_5_6_sol">GPT-5.6 Sol Max / GPT-4o API (OpenAI)</option>
             <option value="claude_3_5">Claude 3.5 Sonnet API (Anthropic)</option>
-            <option value="gemini_2_5">Gemini 2.5 Pro API (Google DeepMind)</option>
+            <option value="deepseek_v3">DeepSeek V3 / R1 MoE API (DeepSeek AI)</option>
           </select>
         </div>
       </div>

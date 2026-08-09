@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ARCHITECTURE_CONCEPTS } from '../data/concepts';
 import { ArchitectureMode } from '../types';
-import { Lightbulb, CheckCircle2, AlertTriangle, ArrowRight, Zap, Database, Cpu, Brain, Layers } from 'lucide-react';
+import { Lightbulb, CheckCircle2, AlertTriangle, ArrowRight, Zap, Database, Cpu, Brain, Layers, BookOpen } from 'lucide-react';
 
 interface ExplainerSectionProps {
   onSelectSimulator: (mode: ArchitectureMode) => void;
@@ -206,6 +206,92 @@ export const ExplainerSection: React.FC<ExplainerSectionProps> = ({ onSelectSimu
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        {/* Senior Architecture & Migration Panel */}
+        <div className="mt-8 border-t border-slate-800/80 pt-6 space-y-6">
+          <div className="bg-slate-900/90 border border-indigo-500/30 rounded-2xl p-6 space-y-5">
+            <div className="flex items-center space-x-3">
+              <div className="p-2.5 bg-indigo-500/20 rounded-xl border border-indigo-500/30 text-indigo-400">
+                <BookOpen className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <span>Auditoría de Archivos y Hoja de Ruta para Migración a Python, Rust y C++</span>
+                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Senior Research</span>
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Ubicación real de los componentes en la estructura del proyecto y guía paso a paso para transición a entornos nativos de producción.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                <div className="text-xs font-bold text-emerald-400 flex items-center justify-between">
+                  <span>1. Ubicación de Archivos en la App</span>
+                  <span className="font-mono text-[10px] text-slate-500">Node.js + React</span>
+                </div>
+                <ul className="text-xs text-slate-300 space-y-1.5 font-mono">
+                  <li><strong className="text-indigo-300">/server/nanoEngine.ts:</strong> Motor con buffers de tensores SIMD Float32 local.</li>
+                  <li><strong className="text-indigo-300">/server.ts:</strong> Servidor Express API y orquestador de inferencia y SFT/DPO.</li>
+                  <li><strong className="text-indigo-300">/src/components/CodeInspector.tsx:</strong> Código nativo exportable en PyTorch, C++, Rust y Triton.</li>
+                </ul>
+              </div>
+
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                <div className="text-xs font-bold text-amber-400 flex items-center justify-between">
+                  <span>2. ¿Por qué está en TypeScript?</span>
+                  <span className="font-mono text-[10px] text-slate-500">Orquestación Web</span>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  En este entorno de vista previa interactiva, Node.js y React permiten ejecutar la simulación de tensores en memoria en tiempo real directamente en el navegador y servidor web sin requerir GPUs dedicadas H100.
+                </p>
+              </div>
+
+              <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                <div className="text-xs font-bold text-cyan-400 flex items-center justify-between">
+                  <span>3. Pasos de Migración Nativa</span>
+                  <span className="font-mono text-[10px] text-slate-500">Producción 1.2T</span>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Para llevar Aethel-5 a entrenamiento masivo en clústeres GPU, los pesos se exportan a <code className="text-cyan-300">.safetensors</code> y se ejecutan en PyTorch Megatron-LM o C++ llama.cpp.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 font-mono text-xs">
+              <span className="text-slate-400 font-bold uppercase text-[11px] tracking-wider block border-b border-slate-800 pb-2">
+                📋 Procedimiento Técnico para Exportación e Implementación Nativa
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="space-y-1">
+                  <span className="text-indigo-400 font-bold">🐍 Migración a Python (PyTorch):</span>
+                  <p className="text-slate-400 text-[11px]">
+                    1. Copia el módulo PyTorch desde la pestaña <strong>"5. Código Exportable"</strong>.<br />
+                    2. Instala <code className="text-indigo-300">torch flash-attn megatron-lm</code>.<br />
+                    3. Ejecuta con DDP/ZeRO-3 para entrenar los 1.2 Trillones de parámetros.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-cyan-400 font-bold">🦀 Migración a Rust (Candle):</span>
+                  <p className="text-slate-400 text-[11px]">
+                    1. Usa la crate <code className="text-cyan-300">candle-core</code> de HuggingFace.<br />
+                    2. Compila el binario con soporte Metal/CUDA.<br />
+                    3. Proporciona microsegundos de latencia por token en producción.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-emerald-400 font-bold">⚡ Migración a C++ / CUDA:</span>
+                  <p className="text-slate-400 text-[11px]">
+                    1. Integra los kernels CUDA customizados en GGML/llama.cpp.<br />
+                    2. Compila con <code className="text-emerald-300">nvcc -O3 -arch=sm_90</code>.<br />
+                    3. Despliega en servidores Edge o supercomputadores sin overhead.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

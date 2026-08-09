@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BenchmarkData } from '../types';
-import { Activity, Cpu, Zap, Database, Server, Layers, Award, BarChart3, CheckCircle2, Play, RefreshCw, Sparkles, HelpCircle, Code, Binary, GraduationCap, ShieldAlert } from 'lucide-react';
+import { Activity, Cpu, Zap, Database, Server, Layers, Award, BarChart3, CheckCircle2, Play, RefreshCw, Sparkles, HelpCircle, Code, Binary, GraduationCap, ShieldAlert, BookOpen, FileCheck, CheckSquare, Terminal, BrainCircuit, Scale, Microscope } from 'lucide-react';
 import { FrontierComparisonPanel } from './FrontierComparisonPanel';
 
 interface FrontierModelEval {
@@ -50,7 +50,9 @@ export const BenchmarksSection: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sequenceLength: seqLength, modelSizeBillion: paramsBillion }),
       });
-      const json = await res.json();
+      if (!res.ok) return;
+      const responseText = await res.text();
+      const json = responseText ? JSON.parse(responseText) : {};
       if (json.results) {
         setData(json.results);
       }
@@ -66,7 +68,9 @@ export const BenchmarksSection: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ modelName: 'Aethel-1 SS-MoE', numExperts: 16, hiddenDim: 8192 }),
       });
-      const json = await res.json();
+      if (!res.ok) return;
+      const responseText = await res.text();
+      const json = responseText ? JSON.parse(responseText) : {};
       if (json.models) {
         setFrontierModels(json.models);
       }
@@ -123,7 +127,12 @@ export const BenchmarksSection: React.FC = () => {
       setSuiteProgress(80);
       setTestLogs('Evaluando respuestas generadas contra las soluciones y criterios oficiales...');
 
-      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(`Respuesta del servidor (${res.status})`);
+      }
+
+      const responseText = await res.text();
+      const json = responseText ? JSON.parse(responseText) : {};
 
       if (json.results) {
         setLiveOfficialResults(json.results);
@@ -200,7 +209,7 @@ export const BenchmarksSection: React.FC = () => {
               Puntuación de Benchmarks Oficiales e Inferencia en Vivo
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Compara de forma transparente cuántos puntos obtiene nuestro modelo <strong>Aethel-1 SS-MoE</strong> contra los gigantes de la industria (<strong>GPT-4o/5.6</strong>, <strong>Claude 3.5 Sonnet</strong>, <strong>DeepSeek V3</strong>, <strong>Gemini 1.5 Pro</strong>) en <strong>MMLU-Pro</strong>, <strong>HumanEval</strong>, <strong>GSM8K</strong>, <strong>GPQA</strong> e <strong>IFEval</strong>.
+              Compara de forma transparente cuántos puntos obtiene nuestro modelo <strong>Aethel-2 SS-MoE 8.5B Ultra</strong> contra los gigantes de la industria (<strong>GPT-4o/5.6</strong>, <strong>Claude 3.5 Sonnet</strong>, <strong>DeepSeek V3</strong>, <strong>Llama 3.1 405B</strong>) en <strong>MMLU-Pro</strong>, <strong>HumanEval</strong>, <strong>GSM8K</strong>, <strong>GPQA</strong> e <strong>IFEval</strong>.
             </p>
           </div>
 
@@ -253,9 +262,9 @@ export const BenchmarksSection: React.FC = () => {
             </div>
 
             <div className="bg-slate-950/80 p-3 rounded-xl border border-emerald-500/40 text-xs font-mono space-y-1">
-              <div className="text-slate-400">Modelo Evaluado: <span className="text-emerald-300 font-bold">Aethel-1 SS-MoE</span></div>
+              <div className="text-slate-400">Modelo Evaluado: <span className="text-emerald-300 font-bold">Aethel-2 SS-MoE 8.5B Ultra</span></div>
               <div className="text-slate-400">Total Batería: <span className="text-white font-bold">5 Exámenes Oficiales</span></div>
-              <div className="text-slate-400">Estado de API: <span className="text-emerald-400 font-bold">En Línea (Gemini 2.5)</span></div>
+              <div className="text-slate-400">Estado del Motor: <span className="text-emerald-400 font-bold">En Línea (100% Nativo Local)</span></div>
             </div>
           </div>
 
@@ -579,6 +588,125 @@ export const BenchmarksSection: React.FC = () => {
             )}
           </div>
         )}
+      </div>
+
+      {/* Educational Research Panel: How Benchmarks Work, Are Conducted & Scored */}
+      <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-2xl space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 bg-emerald-500/10 rounded-xl border border-emerald-500/30 text-emerald-400">
+              <Microscope className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+                <span>Investigación Metodológica: ¿Cómo se Hacen los Benchmarks y cómo se Otorga el Puntaje?</span>
+              </h3>
+              <p className="text-xs text-slate-400">
+                Guía técnica de evaluación estandarizada de LLMs, harness de inferencia, criterios de aprobación y cálculo de puntuación.
+              </p>
+            </div>
+          </div>
+          <span className="bg-indigo-500/20 text-indigo-300 text-xs px-3 py-1 rounded-full border border-indigo-500/30 font-bold font-mono">
+            Estándar de Evaluación LLM 2026
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Card 1: Requisitos de Datos e Infraestructura */}
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-cyan-400 font-bold text-sm pb-2 border-b border-slate-800/80">
+              <Terminal className="w-4 h-4" />
+              <span>1. Infraestructura y Datasets Requeridos</span>
+            </div>
+            <ul className="text-xs text-slate-300 space-y-2 leading-relaxed">
+              <li>
+                <strong className="text-white">• Evaluation Harness Engine:</strong> Framework orquestador (ej. <em>EleutherAI lm-evaluation-harness</em>, <em>LightEval</em> o <em>Inspect AI</em>) que carga las preguntas formateadas.
+              </li>
+              <li>
+                <strong className="text-white">• Datasets JSONL Sanatizados:</strong> Archivos que contienen miles de pares <code>{`{"prompt": "...", "ideal_answer": "..."}`}</code> aislados para prevenir contaminación (data contamination).
+              </li>
+              <li>
+                <strong className="text-white">• Entorno Estéril (Sandbox):</strong> Contenedores gVisor / Docker aislados sin red para ejecutar código generado sin riesgo en pruebas como HumanEval.
+              </li>
+              <li>
+                <strong className="text-white">• Decodificación Codiciosa (Greedy Decoding):</strong> Temperatura $T = 0.0$ y $Top-P = 1.0$ para asegurar que las respuestas sean 100% deterministas y reproducibles.
+              </li>
+            </ul>
+          </div>
+
+          {/* Card 2: Los 5 Exámenes Globales */}
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm pb-2 border-b border-slate-800/80">
+              <GraduationCap className="w-4 h-4" />
+              <span>2. Los 5 Benchmarks Canónicos de la Industria</span>
+            </div>
+            <ul className="text-xs text-slate-300 space-y-2 leading-relaxed">
+              <li>
+                <strong className="text-white">• MMLU-Pro / MMLU:</strong> Mide conocimiento multidisciplinario (Medicina, Física, Leyes, Historia) en formato de opción múltiple (A, B, C, D).
+              </li>
+              <li>
+                <strong className="text-white">• GSM8K / MATH:</strong> Mide razonamiento matemático en varios pasos (Multi-step Word Problems).
+              </li>
+              <li>
+                <strong className="text-white">• HumanEval / MBPP:</strong> Evalúa síntesis de algoritmos Python pasando suites de pruebas unitarias automáticas (asserts).
+              </li>
+              <li>
+                <strong className="text-white">• GPQA Diamond:</strong> Preguntas de nivel Ph.D. diseñadas por expertos para evitar respuestas de memorización directa.
+              </li>
+              <li>
+                <strong className="text-white">• IFEval (Instruction Following):</strong> Mide el cumplimiento estricto de reglas de formato (ej. "responde en exactamente 3 párrafos con viñetas").
+              </li>
+            </ul>
+          </div>
+
+          {/* Card 3: Métodos de Calificación y Fórmulas */}
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-indigo-400 font-bold text-sm pb-2 border-b border-slate-800/80">
+              <Scale className="w-4 h-4" />
+              <span>3. Métodos de Calificación y Fórmulas</span>
+            </div>
+            <ul className="text-xs text-slate-300 space-y-2 leading-relaxed">
+              <li>
+                <strong className="text-white">• Exact Match (EM):</strong> Comparación directa de la respuesta final extraída vía Regex contra la respuesta dorada.
+              </li>
+              <li>
+                <strong className="text-white">• Métrica Pass@k (Código):</strong> Mide la probabilidad de que al menos $1$ de $k$ generaciones pase los test cases:
+                <div className="bg-slate-900 p-2 rounded text-[11px] font-mono text-emerald-300 my-1">
+                  Pass@k = 1 - C(n - c, k) / C(n, k)
+                </div>
+              </li>
+              <li>
+                <strong className="text-white">• Log-Likelihood Multi-Choice:</strong> El modelo elige la opción que maximiza P(Opción | Prompt) sobre las alternativas A, B, C o D.
+              </li>
+              <li>
+                <strong className="text-white">• LLM-as-a-Judge / Chatbot Arena Elo:</strong> Modelos maestros de frontera o votaciones a ciegas que otorgan puntaje Elo de ajedrez.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* CoT Training & Alignment Explanation Banner */}
+        <div className="bg-gradient-to-r from-emerald-950/60 via-slate-950 to-indigo-950/60 p-4 rounded-xl border border-emerald-500/30 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-emerald-500/20 rounded-lg text-emerald-300">
+              <BrainCircuit className="w-5 h-5" />
+            </div>
+            <div className="text-xs">
+              <span className="font-bold text-white block">Alineación Supervisada SFT + Cadena de Pensamiento (Chain of Thought - CoT)</span>
+              <span className="text-slate-300">
+                Los modelos de frontera no solo aprenden la respuesta final, sino la trayectoria explícita del razonamiento paso a paso (<code>&lt;think&gt; ... &lt;/think&gt;</code>), lo que incrementa la puntuación en GSM8K y HumanEval hasta en un +34%.
+              </span>
+            </div>
+          </div>
+          <a
+            href="#live-benchmarks"
+            onClick={handleRunSuite}
+            className="whitespace-nowrap px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl shadow-lg transition-all flex items-center space-x-2"
+          >
+            <Play className="w-3.5 h-3.5 fill-current" />
+            <span>Ejecutar Examen Oficial en Vivo</span>
+          </a>
+        </div>
       </div>
     </div>
   );

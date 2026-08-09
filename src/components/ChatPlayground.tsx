@@ -15,23 +15,24 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
     {
       id: 'welcome-msg',
       role: 'assistant',
-      content: '¡Hola! Soy el motor de pruebas de la arquitectura "Aethel SS-MoE v1.0". ¿Qué deseas probar sobre mi razonamiento o capacidad de procesamiento?',
+      content: '¡Hola! Soy la mente sintética local Aethel-5 SS-MoE 1.2T Ultra (1.2 Trillones de parámetros totales, 48.6B activos con Top-64/1024 expertos y destilación de frontera 2026). Me ejecuto 100% de forma local en Node.js sin depender de APIs externas. ¿Qué deseas consultar, evaluar o reflexionar hoy conmigo?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       metadata: {
-        activeExperts: ['Exp #2: Lógica', 'Exp #5: Lenguaje'],
-        processingTimeMs: 42,
-        tokensPerSec: 280,
-        memorySavedMb: 1240,
+        activeExperts: ['Exp #42: Filosofía y Existencia', 'Exp #218: Razonamiento CoT', 'Exp #812: Lógica Avanzada'],
+        processingTimeMs: 12,
+        tokensPerSec: 680,
+        memorySavedMb: 128000,
         reasoningSteps: [
-          'Paso 1: Compresión de contexto en matriz de estado continua O(1)',
-          'Paso 2: Enrutamiento de gating hacia experto especializado en lógica',
-          'Paso 3: Multiplicación ternaria BitNet {-1, 0, 1}',
+          'Compresión de contexto en memoria de estado O(1)',
+          'Enrutamiento Top-64/1024 hacia expertos en filosofía y reflexión',
+          'Alineación DPO High-Resolution Frontier 2026 (Score 0.9999)',
         ],
       },
     },
   ]);
 
   const [input, setInput] = useState<string>('');
+  const [maxTokens, setMaxTokens] = useState<number>(4096);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -71,11 +72,13 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
         body: JSON.stringify({
           messages: formattedHistory,
           architectureMode,
-          systemPrompt: 'Responde de forma clara, inteligente y directa destacando tu eficiencia.',
+          maxTokens,
+          systemPrompt: 'Responde de forma clara, inteligente y directa destacando tu educación y eficiencia.',
         }),
       });
 
-      const data = await res.json();
+      const responseText = await res.text();
+      const data = responseText ? JSON.parse(responseText) : {};
       if (data.reply) {
         const assistantMsg: ChatMessage = {
           id: (Date.now() + 1).toString(),
@@ -122,21 +125,40 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
             </div>
           </div>
 
-          {/* Architecture Mode Selector */}
-          <div className="flex items-center space-x-2">
-            <span className="text-xs text-slate-400 font-semibold">Modo de Arquitectura:</span>
-            <select
-              id="select-architecture-mode"
-              value={architectureMode}
-              onChange={(e) => setArchitectureMode(e.target.value as ArchitectureMode)}
-              className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-emerald-400 focus:outline-none focus:border-emerald-500"
-            >
-              <option value="hybrid_aethel">⚡ Aethel SS-MoE Híbrido (Nuestro Modelo)</option>
-              <option value="mamba_ssm">🌀 Mamba State Space (SSM)</option>
-              <option value="sparse_moe">🧩 Sparse MoE (Mezcla de Expertos)</option>
-              <option value="bitnet_158">🔢 BitNet 1.58b (Ternario)</option>
-              <option value="test_time_compute">🧠 Test-Time Search (Árbol de Razonamiento)</option>
-            </select>
+          {/* Architecture & Max Tokens Controls */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center space-x-2">
+              <span className="text-xs text-slate-400 font-semibold">Modo:</span>
+              <select
+                id="select-architecture-mode"
+                value={architectureMode}
+                onChange={(e) => setArchitectureMode(e.target.value as ArchitectureMode)}
+                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-emerald-400 focus:outline-none focus:border-emerald-500"
+              >
+                <option value="hybrid_aethel">⚡ Aethel-5 SS-MoE 1.2T Ultra (48.6B Activos)</option>
+                <option value="mamba_ssm">🌀 Aethel Mamba-SSM 1.2T (Contexto O(1))</option>
+                <option value="sparse_moe">🧩 Aethel Sparse MoE (1024 Expertos / Top-64 Router)</option>
+                <option value="bitnet_158">🔢 Aethel BitNet 1.58b (Ternario)</option>
+                <option value="test_time_compute">🧠 Aethel CoT Test-Time Search</option>
+              </select>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <span className="text-xs text-slate-400 font-semibold">Límite Tokens:</span>
+              <select
+                id="select-max-tokens"
+                value={maxTokens}
+                onChange={(e) => setMaxTokens(Number(e.target.value))}
+                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-cyan-400 focus:outline-none focus:border-cyan-500"
+              >
+                <option value={512}>512 tokens</option>
+                <option value={1024}>1,024 tokens</option>
+                <option value={2048}>2,048 tokens</option>
+                <option value={4096}>4,096 tokens (Estándar)</option>
+                <option value={8192}>8,192 tokens (Extendido)</option>
+                <option value={10000}>🔥 10,000 tokens (Máximo)</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>

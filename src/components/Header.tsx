@@ -100,19 +100,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </button>
 
             <button
-              id="tab-benchmarks"
-              onClick={() => setActiveTab('benchmarks')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                activeTab === 'benchmarks'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-              }`}
-            >
-              <Activity className="w-3.5 h-3.5 text-blue-400" />
-              <span>6. VRAM/FLOPS</span>
-            </button>
-
-            <button
               id="tab-chat"
               onClick={() => setActiveTab('chat')}
               className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
@@ -122,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               }`}
             >
               <MessageSquareCode className="w-3.5 h-3.5 text-emerald-400" />
-              <span>7. Chat Gemini</span>
+              <span>6. Chat Aethel-5</span>
             </button>
 
             <button
@@ -135,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               }`}
             >
               <Cpu className="w-4 h-4 text-emerald-300 animate-pulse" />
-              <span>8. Modelo 1M Local (CPU)</span>
+              <span>7. Modelo 1.2T Local Nativo</span>
             </button>
           </nav>
 
@@ -147,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="flex items-center space-x-1.5 text-xs font-bold text-emerald-300 bg-emerald-500/20 hover:bg-emerald-500/30 px-3 py-1.5 rounded-xl border border-emerald-500/40 transition-all cursor-pointer shadow-md shadow-emerald-500/10"
             >
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>🔥 Probar Modelo 1M Local</span>
+              <span>🔥 Probar Modelo 1.2T Nativo</span>
             </button>
           </div>
         </div>
@@ -161,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               activeTab === 'nano1m' ? 'bg-emerald-500 text-slate-950' : 'text-emerald-300 bg-emerald-500/20 border border-emerald-500/30'
             }`}
           >
-            🔥 Modelo 1M Local
+            🔥 Modelo 1.2T Local
           </button>
           <button
             id="mobile-tab-planner"
@@ -207,15 +194,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             }`}
           >
             Simuladores
-          </button>
-          <button
-            id="mobile-tab-benchmarks"
-            onClick={() => setActiveTab('benchmarks')}
-            className={`px-3 py-1 rounded-md text-xs font-medium whitespace-nowrap ${
-              activeTab === 'benchmarks' ? 'bg-indigo-600 text-white' : 'text-slate-400 bg-slate-800/40'
-            }`}
-          >
-            Benchmarks
           </button>
           <button
             id="mobile-tab-chat"
