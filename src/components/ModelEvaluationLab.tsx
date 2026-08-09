@@ -893,7 +893,7 @@ export const ModelEvaluationLab: React.FC = () => {
                   <span>EleutherAI LM Evaluation Harness Runner</span>
                 </h3>
                 <p className="text-[11px] text-slate-400">
-                  Ejecuta evaluaciones estandarizadas académicas para tu modelo de pesos locales Aethel-Quantum 14B.
+                  Ejecuta evaluaciones estandarizadas académicas para tu modelo de pesos locales Aethel-Quantum 30B.
                 </p>
               </div>
 
@@ -944,7 +944,7 @@ export const ModelEvaluationLab: React.FC = () => {
               <span className="text-[10px] font-bold text-slate-400 font-mono uppercase block">Sintaxis CLI de EleutherAI Harness:</span>
               <div className="flex bg-slate-950 p-3 rounded-xl border border-slate-800 font-mono text-xs items-center justify-between text-emerald-400">
                 <span>
-                  lm_eval run --model hf --model_args pretrained=Aethel-Quantum-14B --tasks {selectedTasks.join(',')}
+                  lm_eval run --model hf --model_args pretrained=Aethel-Quantum-30B --tasks {selectedTasks.join(',')}
                 </span>
                 <button
                   onClick={handleRunHarness}
