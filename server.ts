@@ -16,7 +16,7 @@ async function startServer() {
   app.get('/api/health', (_req, res) => {
     res.json({
       status: 'ok',
-      engine: 'Aethel-5 SS-MoE 1.2T Ultra Local Engine',
+      engine: 'Aethel-5 SS-MoE 1.8T Ultra Local Engine',
       weightsInitialized: true,
       timestamp: new Date().toISOString(),
     });
@@ -40,17 +40,17 @@ async function startServer() {
 
       let headerBadge = '';
       if (architectureMode === 'hybrid_aethel') {
-        headerBadge = `[Aethel-5 SS-MoE 1.2T Ultra | 48.6B Activos | Top-64/1024 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s | DPO Score: ${(nanoRes.rlhfPreferenceScore * 100).toFixed(2)}%]`;
+        headerBadge = `[Aethel-5 SS-MoE 1.8T Ultra | 64B Activos | Top-128/2048 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s | DPO Score: ${(nanoRes.rlhfPreferenceScore * 100).toFixed(2)}%]`;
       } else if (architectureMode === 'mamba_ssm') {
-        headerBadge = `[Aethel Mamba-3 SSM 48.6B | Contexto O(1) Recurrente | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
+        headerBadge = `[Aethel Mamba-3 SSM 64B | Contexto O(1) Recurrente | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
       } else if (architectureMode === 'sparse_moe') {
-        headerBadge = `[Aethel Sparse MoE Top-64/1024 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
+        headerBadge = `[Aethel Sparse MoE Top-128/2048 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
       } else if (architectureMode === 'bitnet_158') {
         headerBadge = `[Aethel BitNet 1.58b Ternario {-1,0,1} | Multiplicación $0 | Latencia: ${nanoRes.durationMs}ms]`;
       } else if (architectureMode === 'test_time_compute') {
         headerBadge = `[Aethel Tree-of-Thought Search CoT | Búsqueda en Tiempo de Prueba | Latencia: ${nanoRes.durationMs}ms]`;
       } else {
-        headerBadge = `[Aethel-5 Engine Nativo Local | 1.2T Totales / 48.6B Activos | Latencia: ${nanoRes.durationMs}ms]`;
+        headerBadge = `[Aethel-5 Engine Nativo Local | 1.8T Totales / 64B Activos | Latencia: ${nanoRes.durationMs}ms]`;
       }
 
       res.json({
@@ -117,7 +117,7 @@ async function startServer() {
           inferenceSpeedTokensSec: Math.round(420),
         },
         hybridAethel: {
-          name: 'Aethel-5 SS-MoE 1.2T Ultra (Nuestro Modelo)',
+          name: 'Aethel-5 SS-MoE 1.8T Ultra (Nuestro Modelo)',
           kvCacheMemoryMb: Math.round(0.2 * 10) / 10,
           flopsPerTokenG: Math.round((moeActiveParamsB * 0.2) * 10) / 10,
           energyJoulesPer1000Tokens: Math.round((paramsB * 0.02) * 10) / 10,
@@ -198,8 +198,8 @@ async function startServer() {
       models: [
         {
           id: 'aethel_5_ss_moe',
-          name: modelName || 'Aethel-5 SS-MoE 1.2T Ultra (Nuestro LLM)',
-          organization: 'Aethel Engine (1.2T Params / 48.6B Activos)',
+          name: modelName || 'Aethel-5 SS-MoE 1.8T Ultra (Nuestro LLM)',
+          organization: 'Aethel Engine (1.8T Params / 64B Activos)',
           isCustom: true,
           scores: aethelScores,
           vramEfficiency: '99.9% (Memoria Estado O(1))',

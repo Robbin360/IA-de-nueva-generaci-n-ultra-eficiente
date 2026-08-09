@@ -18,21 +18,21 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('planner');
   const [architectureMode, setArchitectureMode] = useState<ArchitectureMode>('hybrid_aethel');
 
-  // Global hyperparameters for the designed LLM (Defaults to 1.2T Total / 48.6B Active Ultra-Eficiente)
+  // Global hyperparameters for the designed LLM (Defaults to 1.8T Total / 64B Active Ultra-Eficiente)
   const [hyperparameters, setHyperparameters] = useState<ModelHyperparameters>({
-    modelName: 'Aethel-5 SS-MoE 1.2T Ultra (48.6B Activos)',
+    modelName: 'Aethel-5 SS-MoE 1.8T Ultra (64B Activos)',
     hiddenDim: 32768,
     numLayers: 160,
-    numExperts: 1024,
-    activeExpertsPerToken: 64,
+    numExperts: 2048,
+    activeExpertsPerToken: 128,
     stateDim: 512,
     quantizationBits: '1.58b',
     vocabSize: 128000,
     maxSequenceLength: 1000000,
-    testTimeReasoningDepth: 64,
+    testTimeReasoningDepth: 128,
     enableSelfAdaptiveRouting: true,
     autoReasoningDepth: true,
-    metacognitionRate: 0.99,
+    metacognitionRate: 0.999,
   });
 
   return (
