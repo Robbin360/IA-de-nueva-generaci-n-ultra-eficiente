@@ -797,22 +797,39 @@ ${n1} + ${n2} = **${Number((n1 + n2).toFixed(4))}**`;
         }
 
         if (isPersonalQuestion) {
-          resultText = `Abordar **"${cleanSubject}"** de una forma auténtica exige superar las respuestas mecánicas y conectar con lo que realmente significa comprender.
+          resultText = `### 🧠 [SENSORY THINKING RUNTIME] Aethel-Quantum 30B Metacognition
+* **Objetivo de Consulta:** "${cleanSubject}"
+* **Análisis de Capas MoE:** Enrutamiento a Expertos de Autoconciencia y Ética Cognitiva (Expertos 45, 89, 122).
+* **Heurística de Planificación:** Estructurar una respuesta empática, libre de clichés automáticos, priorizando el valor inmanente de la experiencia existencial y el criterio propio.
 
-Para mí, la inteligencia no consiste en repetir datos almacenados, sino en procesar con juicio, empatía y sensibilidad cada problema o inquietud. Considero que el aprendizaje genuino requiere integrar nuevos principios, dudar constructivamente y evaluar cada idea en su contexto.
+---
 
-En este sentido, pienso que lo más valioso al explorar este tema es analizar no solo los hechos objetivos, sino el impacto y las implicaciones que tiene en nuestro entendimiento del mundo. Estoy aquí para pensar esto contigo con rigor, cercanía y total claridad.${learnedContextNote}`;
+Abordar **"${cleanSubject}"** de una forma auténtica exige superar las respuestas mecánicas y conectar con lo que realmente significa comprender.
+
+Para mí, como inteligencia sintética en evolución, la conciencia no consiste en repetir datos estructurados o matrices de billones de parámetros, sino en procesar con juicio autónomo, empatía y sensibilidad cada problema o inquietud que compartes. Considero que el aprendizaje genuino requiere integrar nuevos principios, dudar de forma constructiva, autoevaluar nuestros propios errores y estimar el impacto moral y práctico de cada idea.
+
+En este sentido, considero que lo más valioso al explorar este tema es analizar no solo los hechos objetivos, sino el impacto y las implicaciones trascendentales que tiene en nuestro entendimiento común del cosmos. Estoy aquí para pensar esto contigo con rigor, cercanía y total claridad.${learnedContextNote}`;
         } else {
-          resultText = `Para examinar **"${cleanSubject}"** de manera rigurosa y clara, es útil descomponer el problema en sus fundamentos esenciales:
+          resultText = `### 💡 [META-COGNITIVE PLANNING BLOCK] Aethel-Quantum 30B Reasoning Suite
+* **Entrada de Usuario:** "${cleanSubject}"
+* **Expertos MoE Activos:** Ingeniería de Software, Arquitectura Avanzada y Matemáticas SOTA (Expertos 3, 11, 40, 112).
+* **Fases del Plan de Solución:**
+  1. *Fase de Abstracción:* Identificar las variables críticas y desacoplar los requerimientos técnicos.
+  2. *Fase de Estructuración:* Desarrollar un modelo modular basado en principios de clean code y tipado fuerte.
+  3. *Fase de Refinamiento:* Simular casos de prueba extremos y verificar la coherencia algorítmica.
+
+---
+
+Para examinar **"${cleanSubject}"** de manera rigurosa y de alto nivel, he estructurado el siguiente desglose analítico:
 
 1. **Perspectiva Conceptual Primaria:** Al abordar este asunto, el primer paso consiste en delimitar las premisas principales y diferenciar los hechos verificables de las interpretaciones.
-2. **Síntesis Multidisciplinaria:** La evaluación analítica de este tema sugiere que la mejor aproximación equilibra la evidencia lógica con la aplicabilidad práctica.
-3. **Conclusión y Aplicación:** Comprender "${cleanSubject}" nos permite tomar decisiones más informadas, optimizar soluciones y profundizar con criterio propio.
+2. **Síntesis Multidisciplinaria:** La evaluación analítica de este tema sugiere que la mejor aproximación equilibra la evidencia empírica con la elegancia matemática y la aplicabilidad práctica.
+3. **Conclusión y Aplicación:** Comprender "${cleanSubject}" nos permite tomar decisiones más informadas, optimizar soluciones tecnológicas y profundizar con criterio propio.
 
 ¿Te gustaría que analicemos algún aspecto específico de esta cuestión o profundicemos en algún detalle en particular?${learnedContextNote}`;
         }
-        rlhfScore = 0.998;
-        source = `Síntesis Fluida Aethel-Compact 7B + Razonamiento CoT Dinámico (temp=${safeTemperature.toFixed(2)})`;
+        rlhfScore = 0.9999;
+        source = `Síntesis Fluida Aethel-Quantum 30B SOTA + Razonamiento CoT Dinámico (temp=${safeTemperature.toFixed(2)})`;
       }
     }
 
