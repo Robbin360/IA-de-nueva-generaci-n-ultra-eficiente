@@ -122,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               }`}
             >
               <Cpu className="w-4 h-4 text-emerald-300 animate-pulse" />
-              <span>7. Modelo 1.8T Local Nativo</span>
+              <span>7. Modelo 7B Local Destilado</span>
             </button>
           </nav>
 
@@ -134,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="flex items-center space-x-1.5 text-xs font-bold text-emerald-300 bg-emerald-500/20 hover:bg-emerald-500/30 px-3 py-1.5 rounded-xl border border-emerald-500/40 transition-all cursor-pointer shadow-md shadow-emerald-500/10"
             >
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>🔥 Probar Modelo 1.8T Nativo</span>
+              <span>🔥 Probar Modelo 7B Destilado</span>
             </button>
           </div>
         </div>
@@ -148,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               activeTab === 'nano1m' ? 'bg-emerald-500 text-slate-950' : 'text-emerald-300 bg-emerald-500/20 border border-emerald-500/30'
             }`}
           >
-            🔥 Modelo 1.8T Local
+            🔥 Modelo 7B Local
           </button>
           <button
             id="mobile-tab-planner"

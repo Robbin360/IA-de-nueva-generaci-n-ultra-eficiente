@@ -16,7 +16,7 @@ async function startServer() {
   app.get('/api/health', (_req, res) => {
     res.json({
       status: 'ok',
-      engine: 'Aethel-5 SS-MoE 1.8T Ultra Local Engine',
+      engine: 'Aethel-Compact 7B Distilled Local Engine',
       weightsInitialized: true,
       timestamp: new Date().toISOString(),
     });
@@ -40,17 +40,17 @@ async function startServer() {
 
       let headerBadge = '';
       if (architectureMode === 'hybrid_aethel') {
-        headerBadge = `[Aethel-5 SS-MoE 1.8T Ultra | 64B Activos | Top-128/2048 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s | DPO Score: ${(nanoRes.rlhfPreferenceScore * 100).toFixed(2)}%]`;
+        headerBadge = `[Aethel-Compact 7B Distilled | 1.2B Activos | Top-8/64 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s | DPO Score: ${(nanoRes.rlhfPreferenceScore * 100).toFixed(2)}%]`;
       } else if (architectureMode === 'mamba_ssm') {
-        headerBadge = `[Aethel Mamba-3 SSM 64B | Contexto O(1) Recurrente | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
+        headerBadge = `[Aethel Compact Mamba-SSM 7B | Contexto O(1) Recurrente | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
       } else if (architectureMode === 'sparse_moe') {
-        headerBadge = `[Aethel Sparse MoE Top-128/2048 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
+        headerBadge = `[Aethel Sparse MoE Top-8/64 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
       } else if (architectureMode === 'bitnet_158') {
         headerBadge = `[Aethel BitNet 1.58b Ternario {-1,0,1} | Multiplicación $0 | Latencia: ${nanoRes.durationMs}ms]`;
       } else if (architectureMode === 'test_time_compute') {
         headerBadge = `[Aethel Tree-of-Thought Search CoT | Búsqueda en Tiempo de Prueba | Latencia: ${nanoRes.durationMs}ms]`;
       } else {
-        headerBadge = `[Aethel-5 Engine Nativo Local | 1.8T Totales / 64B Activos | Latencia: ${nanoRes.durationMs}ms]`;
+        headerBadge = `[Aethel-Compact Engine Nativo Local | 7B Totales / 1.2B Activos | Latencia: ${nanoRes.durationMs}ms]`;
       }
 
       res.json({
