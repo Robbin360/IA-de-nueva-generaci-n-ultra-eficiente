@@ -253,7 +253,7 @@ export const ExplainerSection: React.FC<ExplainerSectionProps> = ({ onSelectSimu
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                 <div className="text-xs font-bold text-cyan-400 flex items-center justify-between">
                   <span>3. Pasos de Migración Nativa</span>
-                  <span className="font-mono text-[10px] text-slate-500">Producción 1.2T</span>
+                  <span className="font-mono text-[10px] text-slate-500">Producción 7B</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   Para llevar Aethel-5 a entrenamiento masivo en clústeres GPU, los pesos se exportan a <code className="text-cyan-300">.safetensors</code> y se ejecutan en PyTorch Megatron-LM o C++ llama.cpp.
@@ -271,7 +271,7 @@ export const ExplainerSection: React.FC<ExplainerSectionProps> = ({ onSelectSimu
                   <p className="text-slate-400 text-[11px]">
                     1. Copia el módulo PyTorch desde la pestaña <strong>"5. Código Exportable"</strong>.<br />
                     2. Instala <code className="text-indigo-300">torch flash-attn megatron-lm</code>.<br />
-                    3. Ejecuta con DDP/ZeRO-3 para entrenar los 1.2 Trillones de parámetros.
+                    3. Ejecuta con DDP/ZeRO-3 para entrenar/destilar los 7B parámetros compactos.
                   </p>
                 </div>
                 <div className="space-y-1">
