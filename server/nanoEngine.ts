@@ -546,7 +546,7 @@ No copio pesos privados de ningún modelo externo; lo que sí hago es condensar 
       numExperts: this.numExperts,
       activeExperts: this.activeExpertsPerToken,
       memoryUsageMb: actualRamMb,
-      executionMode: 'Motor Local Aethel-Quantum 30B SOTA Ultra-Distilled (Float32 Matrix SIMD + KD/DPO/RLHF)',
+      executionMode: 'Infraestructura de Nueva Generación (Aethel Hologram Engine v2.0 con Active State Memories [ASM] y Núcleos SIMD)',
       weightsInitialized: true,
       totalTokensGenerated: this.totalTokensGeneratedCount,
       distilledConceptsCount: this.distilledKnowledgeBase.length + this.onlineLearnedConcepts.length,

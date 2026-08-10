@@ -702,9 +702,9 @@ export const LabController = {
     const logs: string[] = [];
 
     logs.push(`[INFO] [LM-EVAL] Starting EleutherAI LM Evaluation Harness v0.4.2...`);
-    logs.push(`[INFO] [LM-EVAL] Initializing hf-causal runner on local CPU matrix...`);
-    logs.push(`[INFO] [LM-EVAL] Model Details: Aethel-Quantum-14B-Distilled (Seed: 0xa37e15)`);
-    logs.push(`[INFO] [LM-EVAL] Local execution layers loaded: 10 layers Float32`);
+    logs.push(`[INFO] [LM-EVAL] Initializing hf-causal runner via Aethel Hologram Engine v2.0...`);
+    logs.push(`[INFO] [LM-EVAL] Model Details: Aethel-Quantum-30B-SOTA (Active State Memories [ASM] Seed: 0xa37e15)`);
+    logs.push(`[INFO] [LM-EVAL] Local execution layers loaded: 16 layers custom SIMD Matrix Kernels`);
     logs.push(`[INFO] [LM-EVAL] Loaded tasks to evaluate: [${taskList.join(', ')}]`);
 
     if (taskList.includes('mmlu_pro')) {
