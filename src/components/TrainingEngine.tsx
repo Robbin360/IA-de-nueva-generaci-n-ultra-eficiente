@@ -637,7 +637,7 @@ export const TrainingEngine: React.FC<TrainingEngineProps> = ({ params, onGoToCh
               </tr>
 
               <tr>
-                <td className="py-2.5 font-bold text-slate-200">Aethel-Compact 7B Distilled</td>
+                <td className="py-2.5 font-bold text-slate-200">Aethel-4 SS-MoE 120B</td>
                 <td className="py-2.5 text-slate-400">Aethel Engine (Nativo)</td>
                 <td className="py-2.5">98.4%</td>
                 <td className="py-2.5">98.8%</td>

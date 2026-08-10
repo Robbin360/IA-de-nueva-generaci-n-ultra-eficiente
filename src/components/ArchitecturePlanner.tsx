@@ -112,7 +112,7 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
     } else if (preset === 'hyper_1_8t') {
       setParams({
         ...params,
-        modelName: 'Aethel-Compact Distilled (7B MoE)',
+        modelName: 'Aethel-1 Hyper-Max (1.8T MoE)',
         hiddenDim: 12288,
         numLayers: 96,
         numExperts: 64,
@@ -227,7 +227,7 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
             onClick={() => applyPreset('hyper_1_8t')}
             className="p-2.5 rounded-xl border border-amber-500/30 bg-amber-950/20 hover:border-amber-400 transition-all text-left space-y-1"
           >
-            <span className="text-xs font-bold text-amber-400 block">7B Compacto</span>
+            <span className="text-xs font-bold text-amber-400 block">1.8T Hyper-Max</span>
             <span className="text-[10px] text-slate-300 block">64 Exp / 12288d</span>
           </button>
 
@@ -276,7 +276,7 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
                 id="slider-hidden-dim"
                 type="range"
                 min="512"
-                max="32768"
+                max="16384"
                 step="512"
                 value={params.hiddenDim}
                 onChange={(e) => setParams({ ...params, hiddenDim: Number(e.target.value) })}
@@ -295,7 +295,7 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
                 id="slider-num-layers"
                 type="range"
                 min="4"
-                max="160"
+                max="128"
                 step="4"
                 value={params.numLayers}
                 onChange={(e) => setParams({ ...params, numLayers: Number(e.target.value) })}
@@ -315,17 +315,10 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
                   id="slider-num-experts"
                   type="range"
                   min="2"
-                  max="2048"
+                  max="128"
                   step="2"
                   value={params.numExperts}
-                  onChange={(e) => {
-                    const numExperts = Number(e.target.value);
-                    setParams({
-                      ...params,
-                      numExperts,
-                      activeExpertsPerToken: Math.min(params.activeExpertsPerToken, numExperts),
-                    });
-                  }}
+                  onChange={(e) => setParams({ ...params, numExperts: Number(e.target.value) })}
                   className="w-full accent-amber-500 bg-slate-950 rounded-lg cursor-pointer"
                 />
               </div>
@@ -339,7 +332,7 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
                   id="slider-active-experts"
                   type="range"
                   min="1"
-                  max={Math.min(params.numExperts, 128)}
+                  max={Math.min(params.numExperts, 16)}
                   step="1"
                   value={params.activeExpertsPerToken}
                   onChange={(e) => setParams({ ...params, activeExpertsPerToken: Number(e.target.value) })}
@@ -358,7 +351,7 @@ export const ArchitecturePlanner: React.FC<ArchitecturePlannerProps> = ({
                 id="slider-state-dim"
                 type="range"
                 min="8"
-                max="512"
+                max="256"
                 step="8"
                 value={params.stateDim}
                 onChange={(e) => setParams({ ...params, stateDim: Number(e.target.value) })}

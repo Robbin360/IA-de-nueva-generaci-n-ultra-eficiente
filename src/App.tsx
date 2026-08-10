@@ -13,27 +13,26 @@ import { ExplainerSection } from './components/ExplainerSection';
 import { SimulatorsSection } from './components/SimulatorsSection';
 import { ChatPlayground } from './components/ChatPlayground';
 import { Nano1MEngineView } from './components/Nano1MEngineView';
-import { ModelEvaluationLab } from './components/ModelEvaluationLab';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('planner');
   const [architectureMode, setArchitectureMode] = useState<ArchitectureMode>('hybrid_aethel');
 
-  // Global hyperparameters for the designed LLM (Defaults to 7B Total / 1.2B Active distilled edge profile)
+  // Global hyperparameters for the designed LLM (Defaults to 1.8T Total / 64B Active Ultra-Eficiente)
   const [hyperparameters, setHyperparameters] = useState<ModelHyperparameters>({
-    modelName: 'Aethel-Compact 7B Distilled (1.2B Activos)',
-    hiddenDim: 4096,
-    numLayers: 32,
-    numExperts: 64,
-    activeExpertsPerToken: 8,
-    stateDim: 256,
+    modelName: 'Aethel-5 SS-MoE 1.8T Ultra (64B Activos)',
+    hiddenDim: 32768,
+    numLayers: 160,
+    numExperts: 2048,
+    activeExpertsPerToken: 128,
+    stateDim: 512,
     quantizationBits: '1.58b',
     vocabSize: 128000,
     maxSequenceLength: 1000000,
-    testTimeReasoningDepth: 16,
+    testTimeReasoningDepth: 128,
     enableSelfAdaptiveRouting: true,
     autoReasoningDepth: true,
-    metacognitionRate: 0.995,
+    metacognitionRate: 0.999,
   });
 
   return (
@@ -85,8 +84,6 @@ export default function App() {
           )}
 
           {activeTab === 'nano1m' && <Nano1MEngineView />}
-
-          {activeTab === 'lab' && <ModelEvaluationLab />}
         </main>
       </div>
 

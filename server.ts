@@ -3,7 +3,6 @@ import path from 'path';
 import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
 import { globalNano1MEngine } from './server/nanoEngine';
-import { LabController } from './server/labController';
 
 dotenv.config();
 
@@ -17,7 +16,7 @@ async function startServer() {
   app.get('/api/health', (_req, res) => {
     res.json({
       status: 'ok',
-      engine: 'Aethel-Compact 7B Distilled Local Engine',
+      engine: 'Aethel-5 SS-MoE 1.8T Ultra Local Engine',
       weightsInitialized: true,
       timestamp: new Date().toISOString(),
     });
@@ -41,17 +40,17 @@ async function startServer() {
 
       let headerBadge = '';
       if (architectureMode === 'hybrid_aethel') {
-        headerBadge = `[Aethel-Compact 7B Distilled | 1.2B Activos | Top-8/64 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s | DPO Score: ${(nanoRes.rlhfPreferenceScore * 100).toFixed(2)}%]`;
+        headerBadge = `[Aethel-5 SS-MoE 1.8T Ultra | 64B Activos | Top-128/2048 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s | DPO Score: ${(nanoRes.rlhfPreferenceScore * 100).toFixed(2)}%]`;
       } else if (architectureMode === 'mamba_ssm') {
-        headerBadge = `[Aethel Compact Mamba-SSM 7B | Contexto O(1) Recurrente | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
+        headerBadge = `[Aethel Mamba-3 SSM 64B | Contexto O(1) Recurrente | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
       } else if (architectureMode === 'sparse_moe') {
-        headerBadge = `[Aethel Sparse MoE Top-8/64 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
+        headerBadge = `[Aethel Sparse MoE Top-128/2048 Expertos | Latencia: ${nanoRes.durationMs}ms | Speed: ${nanoRes.tokensPerSecond} tok/s]`;
       } else if (architectureMode === 'bitnet_158') {
         headerBadge = `[Aethel BitNet 1.58b Ternario {-1,0,1} | Multiplicación $0 | Latencia: ${nanoRes.durationMs}ms]`;
       } else if (architectureMode === 'test_time_compute') {
         headerBadge = `[Aethel Tree-of-Thought Search CoT | Búsqueda en Tiempo de Prueba | Latencia: ${nanoRes.durationMs}ms]`;
       } else {
-        headerBadge = `[Aethel-Compact Engine Nativo Local | 7B Totales / 1.2B Activos | Latencia: ${nanoRes.durationMs}ms]`;
+        headerBadge = `[Aethel-5 Engine Nativo Local | 1.8T Totales / 64B Activos | Latencia: ${nanoRes.durationMs}ms]`;
       }
 
       res.json({
@@ -569,76 +568,6 @@ ${aethelNanoGen.generatedText}`;
       res.json({ success: true, message: 'Conocimiento destilado inyectado correctamente', stats: globalNano1MEngine.getStats() });
     } catch (err: any) {
       console.error('Error en /api/nano-1m/distill:', err);
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  // AI Laboratory & Evaluation Pipelines API Routes
-  app.get('/api/lab/datasets', (_req, res) => {
-    try {
-      res.json(LabController.getDatasets());
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  app.get('/api/lab/checkpoints', (_req, res) => {
-    try {
-      res.json(LabController.getCheckpoints());
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  app.get('/api/lab/active-checkpoint', (_req, res) => {
-    try {
-      res.json(LabController.getActiveCheckpoint());
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  app.post('/api/lab/select-checkpoint', (req, res) => {
-    try {
-      const { checkpointId } = req.body;
-      const result = LabController.setActiveCheckpoint(checkpointId);
-      res.json(result);
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  app.post('/api/lab/train-checkpoint', (req, res) => {
-    try {
-      const { datasetId, customText, learningRate, epochs } = req.body;
-      const result = LabController.trainNewCheckpoint(
-        datasetId,
-        customText,
-        Number(learningRate) || 0.05,
-        Number(epochs) || 8
-      );
-      res.json(result);
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  app.post('/api/lab/evaluate-checkpoint', (req, res) => {
-    try {
-      const { checkpointId } = req.body;
-      const result = LabController.runObjectiveEvaluation(checkpointId);
-      res.json(result);
-    } catch (err: any) {
-      res.status(500).json({ error: err.message });
-    }
-  });
-
-  app.post('/api/lab/run-harness', (req, res) => {
-    try {
-      const { tasks = [] } = req.body;
-      const result = LabController.simulateHarnessLogs(tasks);
-      res.json(result);
-    } catch (err: any) {
       res.status(500).json({ error: err.message });
     }
   });

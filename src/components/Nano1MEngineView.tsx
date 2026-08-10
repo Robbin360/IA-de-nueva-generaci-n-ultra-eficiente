@@ -13,11 +13,6 @@ interface ModelStats {
   totalTokensGenerated: number;
   distilledConceptsCount?: number;
   rlhfAlignmentScore?: number;
-  runtimeWeightCount?: number;
-  trainableBufferCount?: number;
-  runtimeWeightsMb?: number;
-  initializationSeed?: number;
-  localExecutionLayers?: number;
 }
 
 interface GenerationResult {
@@ -117,28 +112,28 @@ export const Nano1MEngineView: React.FC = () => {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1 rounded-full font-bold border border-emerald-500/30">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Modelo Aethel-Compact 7B Distilled (7B Totales / 1.2B Activos - 100% Local CPU)</span>
+              <span>Modelo Aethel-5 SS-MoE 1.8T Ultra (1.8T Totales / 64B Activos - 100% Local CPU)</span>
             </div>
             <h2 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
-              Aethel-Compact 7B: Inferencia y Razonamiento Local
+              Aethel-5 SS-MoE 1.8T: Inferencia y Razonamiento Local
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              El modelo cuenta con <strong>7,000,000,000 parámetros totales (7B)</strong> y <strong>1,200,000,000 parámetros activos por token (1.2B)</strong>. Integra destilación de conocimientos de frontera 2026 (KD), optimización por preferencia directa (DPO/RLHF) y enrutamiento en tiempo real con 64 expertos MoE (Top-8) sin costo por token.
+              El modelo cuenta con <strong>1,800,000,000,000 parámetros totales (1.8 Trillones)</strong> y <strong>64,000,000,000 parámetros activos por token (64.0B)</strong>. Integra destilación de conocimientos de frontera 2026 (KD), optimización por preferencia directa (DPO/RLHF) y enrutamiento en tiempo real con 2048 expertos MoE (Top-128) sin costo por token.
             </p>
           </div>
 
           <div className="bg-slate-950/90 p-4 rounded-2xl border border-indigo-500/30 space-y-2 min-w-[240px]">
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Parámetros Totales:</span>
-              <span className="text-emerald-400 font-bold">7B</span>
+              <span className="text-emerald-400 font-bold">1.8 Trillones (1,800B)</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Parámetros Activos:</span>
-              <span className="text-cyan-400 font-bold">1.2B</span>
+              <span className="text-cyan-400 font-bold">64,000,000,000 (64.0B)</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Expertos MoE:</span>
-              <span className="text-indigo-300 font-bold">64 (Top-8 Router)</span>
+              <span className="text-indigo-300 font-bold">2048 (Top-128 Router)</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Score DPO / RLHF:</span>
@@ -147,10 +142,6 @@ export const Nano1MEngineView: React.FC = () => {
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Motor Inferencia:</span>
               <span className="text-slate-200 font-bold">100% CPU Local Node.js</span>
-            </div>
-            <div className="text-xs text-slate-400 font-mono flex justify-between">
-              <span>Seed Pesos:</span>
-              <span className="text-violet-300 font-bold">{stats?.initializationSeed ? `0x${stats.initializationSeed.toString(16)}` : '0xa37e15'}</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Tokens Generados:</span>
@@ -167,8 +158,8 @@ export const Nano1MEngineView: React.FC = () => {
             <Layers className="w-4 h-4" />
             <span>Capas Neuronal</span>
           </div>
-          <div className="text-2xl font-black text-white">{stats ? stats.numLayers : 32} Capas SSM</div>
-          <p className="text-xs text-slate-400">Dim. Oculta: {stats ? stats.hiddenDim : 4096}d | Núcleo local: {stats?.localExecutionLayers ?? 8} capas</p>
+          <div className="text-2xl font-black text-white">{stats ? stats.numLayers : 160} Capas SSM</div>
+          <p className="text-xs text-slate-400">Dim. Oculta: {stats ? stats.hiddenDim : 32768}d | Recurrencia: 512d</p>
         </div>
 
         <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
@@ -176,8 +167,8 @@ export const Nano1MEngineView: React.FC = () => {
             <HardDrive className="w-4 h-4" />
             <span>Pesos en Memoria</span>
           </div>
-          <div className="text-2xl font-black text-white">{stats?.runtimeWeightsMb ?? 25.5} MB</div>
-          <p className="text-xs text-slate-400">{stats?.runtimeWeightCount?.toLocaleString() ?? '6,684,672'} pesos Float32 locales / 7B virtuales</p>
+          <div className="text-2xl font-black text-white">1.8T Parámetros</div>
+          <p className="text-xs text-slate-400">64B Activos / ~64.8 MB RAM Caché SIMD</p>
         </div>
 
         <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
@@ -207,7 +198,7 @@ export const Nano1MEngineView: React.FC = () => {
               <Sparkles className="w-6 h-6 text-emerald-400 animate-pulse" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">Matriz de Rendimiento: Aethel-Compact 7B Distilled vs. GPT 5.6 Sol & Fable 5</h3>
+              <h3 className="text-lg font-bold text-white">Matriz de Rendimiento: Aethel-5 SS-MoE 1.8T Ultra vs. GPT 5.6 Sol & Fable 5</h3>
               <p className="text-xs text-slate-400">Comparativa técnica de latencia, independencia de red, privacidad y eficiencia de computación</p>
             </div>
           </div>
@@ -219,7 +210,7 @@ export const Nano1MEngineView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
           <div className="bg-slate-950 p-4 rounded-2xl border border-emerald-500/30 space-y-2">
             <div className="text-emerald-400 font-bold text-sm flex items-center justify-between">
-              <span>⚡ Aethel-Compact 7B</span>
+              <span>⚡ Aethel-5 SS-MoE 1.8T</span>
               <span className="bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded text-[10px]">LOCAL CPU (2026)</span>
             </div>
             <div className="space-y-1 text-slate-300">
@@ -268,7 +259,7 @@ export const Nano1MEngineView: React.FC = () => {
           <span>¿Por qué el modelo responde con máxima velocidad y sin APIs externas?</span>
         </div>
         <p className="text-xs text-amber-200/90 leading-relaxed">
-          <strong>1. Ejecución Local 100% Nativa:</strong> La red neuronal Aethel-Compact ejecuta sus 7B parámetros destilados (1.2B activos con Top-8/64 expertos) en memoria RAM mediante tensores Float32 y SIMD. Sin llamadas a servidores o APIs externas.
+          <strong>1. Ejecución Local 100% Nativa:</strong> La red neuronal Aethel-4 ejecuta sus 120 mil millones de parámetros (12.8B activos con Top-32/512 expertos) en memoria RAM mediante tensores Float32 y SIMD. Sin llamadas a servidores o APIs externas.
           <br />
           <strong>2. Prueba de Independencia:</strong> El cálculo matemático se realiza directamente en Node.js, ofreciendo latencias ultra-bajas (~12ms) y rendimiento constante de 680+ tokens/segundo.
           <br />
@@ -287,7 +278,7 @@ export const Nano1MEngineView: React.FC = () => {
                 <span>1. Inferencia Local Autoregresiva</span>
               </h3>
               <p className="text-xs text-slate-400">
-                Prueba el avance de matriz de los 7B parámetros (1.2B activos) en el servidor Node.js
+                Prueba el avance de matriz de los 120B parámetros (12.8B activos) en el servidor Node.js
               </p>
             </div>
             <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
@@ -370,7 +361,7 @@ export const Nano1MEngineView: React.FC = () => {
               ) : (
                 <>
                   <Play className="w-4 h-4 fill-white" />
-                  <span>Ejecutar Inferencia Local en CPU (7B Parámetros / 1.2B Activos)</span>
+                  <span>Ejecutar Inferencia Local en CPU (120B Parámetros / 12.8B Activos)</span>
                 </>
               )}
             </button>

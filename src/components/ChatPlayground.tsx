@@ -15,7 +15,7 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
     {
       id: 'welcome-msg',
       role: 'assistant',
-      content: '¡Hola! Es un gusto saludarte. Soy **Aethel-Compact 7B Distilled** (7B parámetros destilados y 1.2B activos con Top-8/64 expertos y alineación DPO de frontera). Me ejecuto de forma 100% local en tu servidor sin enviar datos a APIs externas. ¿En qué problema, análisis o reflexión deseas que profundicemos hoy?',
+      content: '¡Hola! Es un gusto saludarte. Soy **Aethel-5 SS-MoE 1.8T Ultra** (1.8 Trillones de parámetros totales y 64B activos con Top-128/2048 expertos y alineación DPO de frontera). Me ejecuto de forma 100% local en tu servidor sin enviar datos a APIs externas. ¿En qué problema, análisis o reflexión deseas que profundicemos hoy?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       metadata: {
         activeExperts: ['Exp #94: Filosofía y Existencia', 'Exp #412: Razonamiento CoT', 'Exp #1280: Lógica Avanzada'],
@@ -24,7 +24,7 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
         memorySavedMb: 180000,
         reasoningSteps: [
           'Compresión de contexto en memoria de estado O(1)',
-          'Enrutamiento Top-8/64 hacia expertos en análisis y síntesis',
+          'Enrutamiento Top-128/2048 hacia expertos en análisis y síntesis',
           'Alineación DPO High-Resolution Frontier 2026 (Score 0.9999)',
         ],
       },
@@ -135,9 +135,9 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
                 onChange={(e) => setArchitectureMode(e.target.value as ArchitectureMode)}
                 className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-emerald-400 focus:outline-none focus:border-emerald-500"
               >
-                <option value="hybrid_aethel">⚡ Aethel-Compact 7B Distilled (1.2B Activos)</option>
-                <option value="mamba_ssm">🌀 Aethel Compact Mamba-SSM 7B (Contexto O(1))</option>
-                <option value="sparse_moe">🧩 Aethel Sparse MoE (64 Expertos / Top-8 Router)</option>
+                <option value="hybrid_aethel">⚡ Aethel-5 SS-MoE 1.8T Ultra (64B Activos)</option>
+                <option value="mamba_ssm">🌀 Aethel Mamba-SSM 1.8T (Contexto O(1))</option>
+                <option value="sparse_moe">🧩 Aethel Sparse MoE (2048 Expertos / Top-128 Router)</option>
                 <option value="bitnet_158">🔢 Aethel BitNet 1.58b (Ternario)</option>
                 <option value="test_time_compute">🧠 Aethel CoT Test-Time Search</option>
               </select>

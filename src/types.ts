@@ -1,4 +1,4 @@
-export type TabType = 'planner' | 'trainer' | 'code' | 'explainer' | 'simulators' | 'chat' | 'nano1m' | 'lab';
+export type TabType = 'planner' | 'trainer' | 'code' | 'explainer' | 'simulators' | 'chat' | 'nano1m';
 
 export type ArchitectureMode = 'standard' | 'mamba_ssm' | 'sparse_moe' | 'bitnet_158' | 'test_time_compute' | 'spiking_nn' | 'hybrid_aethel';
 
