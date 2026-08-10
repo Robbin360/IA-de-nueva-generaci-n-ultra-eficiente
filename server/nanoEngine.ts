@@ -48,7 +48,7 @@ interface DistilledKnowledgeEntry {
 export class AethelNano1MEngine {
   // SOTA 2026 Model Architecture Dimensions:
   // Aethel-Quantum SOTA: 30 Billion Total Parameters | 8.0 Billion Active Parameters
-  private architectureName = 'Aethel-Quantum 30B Ultra-Distilled (8.0B Activos)';
+  private architectureName = 'Híbrido Aethel-1 (Mamba + MoE + BitNet + Test-Time)';
   private vocabSize = 128000;
   private hiddenDim = 7168;
   private numLayers = 60;

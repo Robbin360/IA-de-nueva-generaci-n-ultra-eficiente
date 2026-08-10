@@ -347,7 +347,7 @@ export const SECRET_EVALUATION_SET: SecretQuestion[] = [
 export const SAVED_CHECKPOINTS: CheckpointInfo[] = [
   {
     id: 'checkpoint_base_7b',
-    name: 'Aethel-Quantum 30B (SOTA Multi-Distilled Base)',
+    name: 'Híbrido Aethel-1 30B (SOTA Multi-Distilled Base)',
     source: 'Curriculum Completo Fable 5 & GPT-5.6 Sol Integrados',
     dateCreated: new Date(Date.now() - 3600000 * 24).toLocaleString(),
     epochsTrained: 64,
@@ -363,7 +363,7 @@ export const SAVED_CHECKPOINTS: CheckpointInfo[] = [
   },
   {
     id: 'checkpoint_fable_philosophical',
-    name: 'Aethel-Quantum 30B + Fable 5 Logic (Elite Refined)',
+    name: 'Híbrido Aethel-1 30B + Fable 5 Logic (Elite Refined)',
     source: 'Fable 5 (Destilación Heurística Directa)',
     dateCreated: new Date(Date.now() - 3600000 * 12).toLocaleString(),
     epochsTrained: 80,
@@ -380,7 +380,7 @@ export const SAVED_CHECKPOINTS: CheckpointInfo[] = [
   },
   {
     id: 'checkpoint_gpt_optimized_code',
-    name: 'Aethel-Quantum 30B + GPT-5.6 Sol Code (Elite Refined)',
+    name: 'Híbrido Aethel-1 30B + GPT-5.6 Sol Code (Elite Refined)',
     source: 'GPT-5.6 Sol (Destilación Algorítmica Directa)',
     dateCreated: new Date(Date.now() - 3600000 * 6).toLocaleString(),
     epochsTrained: 80,
@@ -625,7 +625,7 @@ export const LabController = {
     const cpId = `checkpoint_custom_${Date.now()}`;
     const newCheckpoint: CheckpointInfo = {
       id: cpId,
-      name: `Aethel-Quantum 30B Checkpoint ${dataset?.name ? 'Sintonizado' : 'Personalizado'} #${SAVED_CHECKPOINTS.length}`,
+      name: `Híbrido Aethel-1 30B Checkpoint ${dataset?.name ? 'Sintonizado' : 'Personalizado'} #${SAVED_CHECKPOINTS.length}`,
       source: dataset?.source || 'Entrada Personalizada del Usuario',
       dateCreated: new Date().toLocaleString(),
       epochsTrained: epochs,
