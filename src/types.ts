@@ -1,4 +1,4 @@
-export type TabType = 'planner' | 'trainer' | 'code' | 'explainer' | 'simulators' | 'chat' | 'nano1m';
+export type TabType = 'planner' | 'trainer' | 'code' | 'explainer' | 'simulators' | 'benchmarks' | 'chat' | 'nano1m' | 'lab' | 'nova';
 
 export type ArchitectureMode = 'standard' | 'mamba_ssm' | 'sparse_moe' | 'bitnet_158' | 'test_time_compute' | 'spiking_nn' | 'hybrid_aethel';
 
@@ -36,7 +36,7 @@ export interface TrainingConfig {
   batchSize: number;
   epochs: number;
   optimizer: 'AdamW' | 'Muon' | 'Lion';
-  teacherSupervision: boolean; // Distillation with Gemini
+  teacherSupervision: boolean; // Teacher model distillation
   targetPerplexity: number;
 }
 
@@ -137,4 +137,70 @@ export interface FrontierModelBenchmark {
   vramMemoryEfficiency: string;
   inferenceSpeedTokSec: number;
 }
+
+export interface AethelLabVersion {
+  versionId: string;
+  versionName: string;
+  date: string;
+  status: 'baseline' | 'active' | 'archived';
+  mmluPro: number;
+  gpqa: number;
+  math: number;
+  liveCodeBench: number;
+  sweBench: number;
+  ifEval: number;
+  overallScore: number;
+  notes: string;
+}
+
+export interface DatasetDomainInfo {
+  id: string;
+  title: string;
+  iconName: string;
+  tokensCount: string;
+  qualityScore: number;
+  description: string;
+  examples: string[];
+}
+
+export interface GRPORewardSample {
+  prompt: string;
+  generatedTrajectories: {
+    id: string;
+    text: string;
+    isCorrect: boolean;
+    reward: number; // +1.0 or 0.0
+    feedback: string;
+  }[];
+  advantageScore: number;
+}
+
+export interface SandboxExecutionResult {
+  code: string;
+  language: 'python' | 'typescript';
+  status: 'SUCCESS' | 'SYNTAX_ERROR' | 'TEST_FAILED';
+  stdout: string;
+  stderr?: string;
+  executionTimeMs: number;
+  autoRepairedCode?: string;
+  passRate: number;
+}
+
+export interface AgentToolResult {
+  step: number;
+  observation: string;
+  thought: string;
+  action: string;
+  toolUsed: 'terminal' | 'python_exec' | 'browser' | 'filesystem' | 'api_call';
+  result: string;
+  status: 'success' | 'failed';
+}
+
+export interface MoERouterStats {
+  routingAccuracy: number; // e.g., 98.4%
+  loadBalancingEntropy: number;
+  expertUtilizationPercentage: number[];
+  topExpertDomains: { expertId: number; domain: string; usage: number }[];
+}
+
 

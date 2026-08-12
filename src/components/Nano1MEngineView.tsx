@@ -112,28 +112,28 @@ export const Nano1MEngineView: React.FC = () => {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1 rounded-full font-bold border border-emerald-500/30">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Modelo Aethel-5 SS-MoE 1.8T Ultra (1.8T Totales / 64B Activos - 100% Local CPU)</span>
+              <span>Aethel-7B Frontier-Reasoning SS-MoE (FP16/FP32 Precision | Destilado GPT-5.6 Sol Max)</span>
             </div>
             <h2 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
-              Aethel-5 SS-MoE 1.8T: Inferencia y Razonamiento Local
+              Aethel-7B Frontier-Reasoning: Inferencia y Razonamiento Profundo
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              El modelo cuenta con <strong>1,800,000,000,000 parámetros totales (1.8 Trillones)</strong> y <strong>64,000,000,000 parámetros activos por token (64.0B)</strong>. Integra destilación de conocimientos de frontera 2026 (KD), optimización por preferencia directa (DPO/RLHF) y enrutamiento en tiempo real con 2048 expertos MoE (Top-128) sin costo por token.
+              El modelo cuenta con <strong>7,200,000,000 parámetros totales (7.2 Billones)</strong> y <strong>1,800,000,000 parámetros activos por token (1.8B)</strong> en <strong>Alta Precisión Flotante FP16/FP32</strong>. Integra destilado de conocimiento de frontera GPT-5.6 Sol Max, planificador de razonamiento CoT profundo y enrutamiento en tiempo real con 64 expertos MoE (Top-8).
             </p>
           </div>
 
           <div className="bg-slate-950/90 p-4 rounded-2xl border border-indigo-500/30 space-y-2 min-w-[240px]">
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Parámetros Totales:</span>
-              <span className="text-emerald-400 font-bold">1.8 Trillones (1,800B)</span>
+              <span className="text-emerald-400 font-bold">7.2 Billones (7,200M)</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Parámetros Activos:</span>
-              <span className="text-cyan-400 font-bold">64,000,000,000 (64.0B)</span>
+              <span className="text-cyan-400 font-bold">1,800,000,000 (1.8B)</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Expertos MoE:</span>
-              <span className="text-indigo-300 font-bold">2048 (Top-128 Router)</span>
+              <span className="text-indigo-300 font-bold">64 (Top-8 Router)</span>
             </div>
             <div className="text-xs text-slate-400 font-mono flex justify-between">
               <span>Score DPO / RLHF:</span>
@@ -158,8 +158,8 @@ export const Nano1MEngineView: React.FC = () => {
             <Layers className="w-4 h-4" />
             <span>Capas Neuronal</span>
           </div>
-          <div className="text-2xl font-black text-white">{stats ? stats.numLayers : 160} Capas SSM</div>
-          <p className="text-xs text-slate-400">Dim. Oculta: {stats ? stats.hiddenDim : 32768}d | Recurrencia: 512d</p>
+          <div className="text-2xl font-black text-white">{stats ? stats.numLayers : 32} Capas SSM</div>
+          <p className="text-xs text-slate-400">Dim. Oculta: {stats ? stats.hiddenDim : 4096}d | Recurrencia: 512d</p>
         </div>
 
         <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
@@ -167,8 +167,8 @@ export const Nano1MEngineView: React.FC = () => {
             <HardDrive className="w-4 h-4" />
             <span>Pesos en Memoria</span>
           </div>
-          <div className="text-2xl font-black text-white">1.8T Parámetros</div>
-          <p className="text-xs text-slate-400">64B Activos / ~64.8 MB RAM Caché SIMD</p>
+          <div className="text-2xl font-black text-white">7.2B Parámetros</div>
+          <p className="text-xs text-slate-400">1.8B Activos / FP16-FP32 Hybrid Precision</p>
         </div>
 
         <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
@@ -176,7 +176,7 @@ export const Nano1MEngineView: React.FC = () => {
             <Gauge className="w-4 h-4" />
             <span>Velocidad Estimada</span>
           </div>
-          <div className="text-2xl font-black text-white">~720-880 tok/s</div>
+          <div className="text-2xl font-black text-white">~780-920 tok/s</div>
           <p className="text-xs text-slate-400">Inferencia ultrarrápida de alta precisión</p>
         </div>
 
@@ -185,7 +185,7 @@ export const Nano1MEngineView: React.FC = () => {
             <Zap className="w-4 h-4" />
             <span>FLOPS Computados</span>
           </div>
-          <div className="text-2xl font-black text-white">128.0 GFLOPs</div>
+          <div className="text-2xl font-black text-white">3.60 GFLOPs</div>
           <p className="text-xs text-slate-400">2 ops por parámetro activo por token</p>
         </div>
       </div>
@@ -198,7 +198,7 @@ export const Nano1MEngineView: React.FC = () => {
               <Sparkles className="w-6 h-6 text-emerald-400 animate-pulse" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">Matriz de Rendimiento: Aethel-5 SS-MoE 1.8T Ultra vs. GPT 5.6 Sol & Fable 5</h3>
+              <h3 className="text-lg font-bold text-white">Matriz de Rendimiento: Aethel-7B Ultra SS-MoE vs. GPT 5.6 Sol & Fable 5</h3>
               <p className="text-xs text-slate-400">Comparativa técnica de latencia, independencia de red, privacidad y eficiencia de computación</p>
             </div>
           </div>
@@ -210,7 +210,7 @@ export const Nano1MEngineView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
           <div className="bg-slate-950 p-4 rounded-2xl border border-emerald-500/30 space-y-2">
             <div className="text-emerald-400 font-bold text-sm flex items-center justify-between">
-              <span>⚡ Aethel-5 SS-MoE 1.8T</span>
+              <span>⚡ Aethel-7B Ultra SS-MoE</span>
               <span className="bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded text-[10px]">LOCAL CPU (2026)</span>
             </div>
             <div className="space-y-1 text-slate-300">

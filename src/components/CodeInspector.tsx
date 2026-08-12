@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ModelHyperparameters } from '../types';
-import { Code2, Copy, Check, Download, Terminal, Cpu, FileCode2 } from 'lucide-react';
+import { Code2, Copy, Check, Download, Terminal, Cpu, FileCode2, BookOpen, Layers, Box, Share2, Sliders, CheckCircle2, Zap } from 'lucide-react';
 
 interface CodeInspectorProps {
   params: ModelHyperparameters;
@@ -434,6 +434,127 @@ print("Kernel Triton para Aethel SS-MoE listo para compilacion JIT.")
           <pre className="text-xs font-mono text-slate-200 leading-relaxed whitespace-pre">
             <code>{currentCode}</code>
           </pre>
+        </div>
+      </div>
+
+      {/* Guide: Local Environment Setup & Exporting GGUF / SafeTensors */}
+      <div id="local-setup-guide-panel" className="bg-slate-900/95 rounded-2xl border border-emerald-500/30 p-6 md:p-8 shadow-xl space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <BookOpen className="w-5 h-5 text-emerald-400" />
+              <h3 className="text-xl font-bold text-slate-100">
+                Guía de Configuración Local y Exportación GGUF / SafeTensors
+              </h3>
+            </div>
+            <p className="text-xs text-slate-300">
+              Paso a paso para compilar, empaquetar y ejecutar la arquitectura MoE en tu propia infraestructura con soporte para Python, Rust y C++.
+            </p>
+          </div>
+          <span className="text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30 shrink-0">
+            Aethel-1 / Aethel-5 Native Stack
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Step 1: Local Environment Setup */}
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-emerald-400 text-xs font-bold font-mono">
+              <Terminal className="w-4 h-4" />
+              <span>1. Entorno de Ejecución Local</span>
+            </div>
+            <p className="text-[11px] text-slate-300 leading-normal">
+              Instala las dependencias nativas necesarias según tu lenguaje de destino:
+            </p>
+            <div className="space-y-2 text-[10px] font-mono">
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                <span className="text-emerald-400 block font-bold mb-1">Python / PyTorch / Triton:</span>
+                <code className="text-slate-300 block bg-slate-950 p-1.5 rounded">
+                  pip install torch safetensors triton huggingface_hub llama-cpp-python
+                </code>
+              </div>
+
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                <span className="text-orange-400 block font-bold mb-1">Rust (Candle Framework):</span>
+                <code className="text-slate-300 block bg-slate-950 p-1.5 rounded">
+                  cargo add candle-core candle-nn safetensors<br />
+                  RUSTFLAGS="-C target-cpu=native" cargo build --release
+                </code>
+              </div>
+
+              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+                <span className="text-cyan-400 block font-bold mb-1">C++17 (llama.cpp / GGML):</span>
+                <code className="text-slate-300 block bg-slate-950 p-1.5 rounded">
+                  git clone https://github.com/ggerganov/llama.cpp.git<br />
+                  cmake -B build -DGGML_CUDA=ON -DCMAKE_BUILD_TYPE=Release
+                </code>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 2: Exporting PyTorch to SafeTensors */}
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-cyan-400 text-xs font-bold font-mono">
+              <Box className="w-4 h-4" />
+              <span>2. Exportar a SafeTensors</span>
+            </div>
+            <p className="text-[11px] text-slate-300 leading-normal">
+              Serializa el diccionario de pesos de PyTorch al formato binario seguro sin ejecución de pickle:
+            </p>
+            <div className="bg-slate-900 p-3 rounded-lg border border-slate-800">
+              <pre className="text-[10px] font-mono text-slate-300 whitespace-pre overflow-x-auto">
+{`from safetensors.torch import save_file
+
+# Obtener state_dict del modelo Aethel
+state_dict = model.state_dict()
+
+# Mapear tensores a FP16 o BitNet Ternario
+tensors = {
+    k: v.contiguous().half()
+    for k, v in state_dict.items()
+}
+
+# Guardar archivo .safetensors de alta velocidad
+save_file(tensors, "aethel_moe_model.safetensors")
+print("Modelo exportado exitosamente a SafeTensors.")`}
+              </pre>
+            </div>
+          </div>
+
+          {/* Step 3: Quantizing & Converting to GGUF */}
+          <div className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-amber-400 text-xs font-bold font-mono">
+              <Zap className="w-4 h-4" />
+              <span>3. Conversión a GGUF y Cuantización</span>
+            </div>
+            <p className="text-[11px] text-slate-300 leading-normal">
+              Convierte el archivo `.safetensors` a formato `.gguf` para ejecutar la arquitectura en CPU/GPU ultra-eficiente:
+            </p>
+            <div className="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-2">
+              <span className="text-[10px] font-mono text-amber-300 block font-bold">1. Ejecutar script de conversión HF/SafeTensors:</span>
+              <code className="text-[10px] font-mono text-slate-300 block bg-slate-950 p-2 rounded">
+                python llama.cpp/convert_hf_to_gguf.py . --outfile aethel_fp16.gguf
+              </code>
+
+              <span className="text-[10px] font-mono text-amber-300 block font-bold">2. Cuantizar a BitNet 1.58b / Q4_K_M:</span>
+              <code className="text-[10px] font-mono text-slate-300 block bg-slate-950 p-2 rounded">
+                ./llama-quantize aethel_fp16.gguf aethel_q4_k.gguf Q4_K_M
+              </code>
+            </div>
+          </div>
+        </div>
+
+        {/* Local Execution Verification Box */}
+        <div className="bg-slate-950/80 p-4 rounded-xl border border-emerald-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2 text-xs font-bold text-slate-200">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span>Compatibilidad con Servidores y Runtime Locales</span>
+            </div>
+            <p className="text-[11px] text-slate-400">
+              Una vez generado el archivo <code>aethel_q4_k.gguf</code> o <code>aethel_moe_model.safetensors</code>, puedes servirlo localmente mediante <strong>Ollama</strong>, <strong>vLLM</strong>, <strong>llama.cpp server</strong> o cargar el kernel Rust SIMD para inferencia local con cero latencia.
+            </p>
+          </div>
         </div>
       </div>
     </div>

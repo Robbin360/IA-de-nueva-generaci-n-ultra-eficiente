@@ -15,17 +15,17 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
     {
       id: 'welcome-msg',
       role: 'assistant',
-      content: '¡Hola! Es un gusto saludarte. Soy **Aethel-5 SS-MoE 1.8T Ultra** (1.8 Trillones de parámetros totales y 64B activos con Top-128/2048 expertos y alineación DPO de frontera). Me ejecuto de forma 100% local en tu servidor sin enviar datos a APIs externas. ¿En qué problema, análisis o reflexión deseas que profundicemos hoy?',
+      content: '¡Hola! Es un gusto saludarte. Soy **Aethel-7B Ultra SS-MoE** (7.2 Billones de parámetros totales y 1.8B activos con Top-8/64 expertos, Mamba-3 SSM y alineación DPO de frontera). Me ejecuto de forma 100% nativa y ejecutable en tu servidor sin depender de APIs externas. ¿En qué problema, análisis o reflexión deseas que profundicemos hoy?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       metadata: {
-        activeExperts: ['Exp #94: Filosofía y Existencia', 'Exp #412: Razonamiento CoT', 'Exp #1280: Lógica Avanzada'],
-        processingTimeMs: 10,
-        tokensPerSec: 750,
-        memorySavedMb: 180000,
+        activeExperts: ['Exp #4: Filosofía y Razonamiento', 'Exp #12: Código Algorítmico', 'Exp #32: Matemática Pura'],
+        processingTimeMs: 8,
+        tokensPerSec: 820,
+        memorySavedMb: 14500,
         reasoningSteps: [
-          'Compresión de contexto en memoria de estado O(1)',
-          'Enrutamiento Top-128/2048 hacia expertos en análisis y síntesis',
-          'Alineación DPO High-Resolution Frontier 2026 (Score 0.9999)',
+          'Compresión de contexto infinito en memoria de estado O(1)',
+          'Enrutamiento Top-8/64 hacia expertos especializados en análisis',
+          'Alineación DPO High-Resolution Frontier (Score 0.9999)',
         ],
       },
     },
@@ -87,14 +87,16 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           architectureMode,
           metadata: {
-            activeExperts: architectureMode === 'hybrid_aethel' ? ['Exp #2: Lógica', 'Exp #5: Algoritmos'] : ['Exp #1: General'],
-            processingTimeMs: Math.floor(Math.random() * 30) + 25,
-            tokensPerSec: Math.floor(Math.random() * 50) + 260,
-            memorySavedMb: 1450,
-            reasoningSteps: [
-              'Análisis de la intención y estructura del prompt',
-              'Activación de submódulos de consulta sin sobrecarga de VRAM',
-              'Generación de respuesta con máxima fidelidad',
+            activeExperts: data.metadata?.activeExperts || (architectureMode === 'hybrid_aethel' ? ['Exp #2: Lógica CoT', 'Exp #5: Algoritmos', 'Exp #8: Filosofía FP32'] : ['Exp #1: General']),
+            processingTimeMs: data.metadata?.processingTimeMs || 28,
+            tokensPerSec: data.metadata?.tokensPerSec || 680,
+            memorySavedMb: data.metadata?.memorySavedMb || 14200,
+            reasoningSteps: data.metadata?.reasoningSteps || [
+              '1. Tokenización y Vectorización FP32 SIMD',
+              '2. Proyección en Recurrencia SSM Mamba-3 O(1)',
+              '3. Enrutamiento Soft-Gate Top-8 MoE con FP32 Accumulation',
+              '4. Búsqueda y Verificación en Árbol de Razonamiento CoT',
+              '5. Auto-Corrección y Refinamiento por Alineación DPO'
             ],
           },
         };
@@ -135,9 +137,9 @@ export const ChatPlayground: React.FC<ChatPlaygroundProps> = ({
                 onChange={(e) => setArchitectureMode(e.target.value as ArchitectureMode)}
                 className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-emerald-400 focus:outline-none focus:border-emerald-500"
               >
-                <option value="hybrid_aethel">⚡ Aethel-5 SS-MoE 1.8T Ultra (64B Activos)</option>
-                <option value="mamba_ssm">🌀 Aethel Mamba-SSM 1.8T (Contexto O(1))</option>
-                <option value="sparse_moe">🧩 Aethel Sparse MoE (2048 Expertos / Top-128 Router)</option>
+                <option value="hybrid_aethel">⚡ Aethel-7B Ultra SS-MoE (1.8B Activos)</option>
+                <option value="mamba_ssm">🌀 Aethel Mamba-3 SSM (Contexto O(1))</option>
+                <option value="sparse_moe">🧩 Aethel Sparse MoE (64 Expertos / Top-8 Router)</option>
                 <option value="bitnet_158">🔢 Aethel BitNet 1.58b (Ternario)</option>
                 <option value="test_time_compute">🧠 Aethel CoT Test-Time Search</option>
               </select>

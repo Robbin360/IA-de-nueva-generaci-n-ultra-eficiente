@@ -11,25 +11,28 @@ import { TrainingEngine } from './components/TrainingEngine';
 import { CodeInspector } from './components/CodeInspector';
 import { ExplainerSection } from './components/ExplainerSection';
 import { SimulatorsSection } from './components/SimulatorsSection';
+import { BenchmarksSection } from './components/BenchmarksSection';
 import { ChatPlayground } from './components/ChatPlayground';
 import { Nano1MEngineView } from './components/Nano1MEngineView';
+import { AethelQuantumLab } from './components/AethelQuantumLab';
+import { NovaArchitectureLab } from './components/NovaArchitectureLab';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>('planner');
+  const [activeTab, setActiveTab] = useState<TabType>('nova');
   const [architectureMode, setArchitectureMode] = useState<ArchitectureMode>('hybrid_aethel');
 
-  // Global hyperparameters for the designed LLM (Defaults to 1.8T Total / 64B Active Ultra-Eficiente)
+  // Global hyperparameters for the designed LLM (Defaults to Aethel-7B Ultra SS-MoE: 7.2B Total / 1.8B Active Executable Engine)
   const [hyperparameters, setHyperparameters] = useState<ModelHyperparameters>({
-    modelName: 'Aethel-5 SS-MoE 1.8T Ultra (64B Activos)',
-    hiddenDim: 32768,
-    numLayers: 160,
-    numExperts: 2048,
-    activeExpertsPerToken: 128,
+    modelName: 'Aethel-7B Ultra SS-MoE (1.8B Activos | BitNet 1.58b)',
+    hiddenDim: 4096,
+    numLayers: 32,
+    numExperts: 64,
+    activeExpertsPerToken: 8,
     stateDim: 512,
     quantizationBits: '1.58b',
-    vocabSize: 128000,
+    vocabSize: 64000,
     maxSequenceLength: 1000000,
-    testTimeReasoningDepth: 128,
+    testTimeReasoningDepth: 64,
     enableSelfAdaptiveRouting: true,
     autoReasoningDepth: true,
     metacognitionRate: 0.999,
@@ -55,6 +58,7 @@ export default function App() {
           {activeTab === 'trainer' && (
             <TrainingEngine
               params={hyperparameters}
+              onUpdateParams={setHyperparameters}
               onGoToChat={() => setActiveTab('chat')}
             />
           )}
@@ -75,6 +79,14 @@ export default function App() {
           {activeTab === 'simulators' && (
             <SimulatorsSection initialMode={architectureMode} />
           )}
+
+          {activeTab === 'benchmarks' && (
+            <BenchmarksSection />
+          )}
+
+          {activeTab === 'lab' && <AethelQuantumLab />}
+          
+          {activeTab === 'nova' && <NovaArchitectureLab />}
 
           {activeTab === 'chat' && (
             <ChatPlayground

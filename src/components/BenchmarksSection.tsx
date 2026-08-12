@@ -209,7 +209,7 @@ export const BenchmarksSection: React.FC = () => {
               Puntuación de Benchmarks Oficiales e Inferencia en Vivo
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Compara de forma transparente cuántos puntos obtiene nuestro modelo <strong>Aethel-2 SS-MoE 8.5B Ultra</strong> contra los gigantes de la industria (<strong>GPT-4o/5.6</strong>, <strong>Claude 3.5 Sonnet</strong>, <strong>DeepSeek V3</strong>, <strong>Llama 3.1 405B</strong>) en <strong>MMLU-Pro</strong>, <strong>HumanEval</strong>, <strong>GSM8K</strong>, <strong>GPQA</strong> e <strong>IFEval</strong>.
+              Compara de forma transparente cuántos puntos obtiene nuestro modelo <strong>Aethel-7B Frontier-Reasoning SS-MoE</strong> (7.2B Totales / 1.8B Activos | Alta Precisión FP16/FP32 | Destilado GPT-5.6 Sol Max) contra los gigantes de la industria (<strong>GPT-4o/5.6 Sol</strong>, <strong>Claude 3.5 Sonnet</strong>, <strong>DeepSeek V3</strong>, <strong>Llama 3.1 405B</strong>) en <strong>MMLU-Pro</strong>, <strong>HumanEval</strong>, <strong>GSM8K</strong>, <strong>GPQA</strong> e <strong>IFEval</strong>.
             </p>
           </div>
 
@@ -262,7 +262,7 @@ export const BenchmarksSection: React.FC = () => {
             </div>
 
             <div className="bg-slate-950/80 p-3 rounded-xl border border-emerald-500/40 text-xs font-mono space-y-1">
-              <div className="text-slate-400">Modelo Evaluado: <span className="text-emerald-300 font-bold">Aethel-2 SS-MoE 8.5B Ultra</span></div>
+              <div className="text-slate-400">Modelo Evaluado: <span className="text-emerald-300 font-bold">Aethel-7B Frontier-Reasoning (FP16/FP32 Precision)</span></div>
               <div className="text-slate-400">Total Batería: <span className="text-white font-bold">5 Exámenes Oficiales</span></div>
               <div className="text-slate-400">Estado del Motor: <span className="text-emerald-400 font-bold">En Línea (100% Nativo Local)</span></div>
             </div>
