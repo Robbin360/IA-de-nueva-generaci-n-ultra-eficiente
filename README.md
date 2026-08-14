@@ -1,61 +1,64 @@
-# Aethel Engine 7B Ultra (Aethel-7B SS-MoE) — Arquitectura de Nueva Generación Ejecutable
+# AETHEL: Arquitectura Cognitiva Bio-Inspirada
 
-Bienvenido a la documentación oficial del motor **Aethel-7B Ultra SS-MoE**, una arquitectura de red neuronal no convencional híbrida diseñada para alcanzar un rendimiento de nivel frontera ($7.2\text{B}$ parámetros totales, $1.8\text{B}$ activos por token) con una ejecución ultra-rápida ($780+\text{ tok/s}$) y $100\%$ nativa en TypeScript, C++, Rust y Python.
-
----
-
-## 🚀 Innovaciones Clave de la Arquitectura
-
-### 1. Híbrido SSM Recurrente + Sparse MoE (Mamba-3 + Top-K Routing)
-* **Atención Sin Matriz KV Gigante ($O(1)$ Spacial Memory):** Reemplaza la atención auto-referencial $O(N^2)$ por bloques de Espacio de Estados (SSM tipo Mamba/S4), manteniendo el contexto de 1M tokens con consumo de VRAM constante durante la inferencia.
-* **Sparse Mixture of Experts (MoE 64 Expertos):** 7.2 Billones de parámetros totales, pero con **enrutamiento dinámico Top-K** (configurable de 2 a 32 expertos activos por token). Los parámetros activos por token se reducen de 7.2B a tan solo **1.8B - 2.7B**.
-
-### 2. Cuantización Ternaria BitNet 1.58-bit $\{-1, 0, 1\}$
-* **Inferencia Sin Multiplicaciones en Punto Flotante (Zero Floating-Point MACs):** Las operaciones lineales de las matrices de pesos utilizan únicamente sumas y restas en enteros ($i8$), reduciendo el ancho de banda de memoria por un factor de **10x** y ahorrando el **82% del consumo energético** en chips x86/ARM/CUDA.
-
-### 3. Enrutamiento Auto-Adaptativo & Test-Time Search (CoT)
-* **Búsqueda en Tiempo de Inferencia:** Profundiza los pasos de razonamiento lógico mediante *Chain-of-Thought* (16 a 256 pasos) antes de emitir la respuesta final.
-* **Ejecución 100% Local Nativa:** Cero dependencia de APIs externas. Todo el flujo de inferencia y evaluación funciona de manera directa en el servidor local.
+**Aethel** no es solo un Modelo de Lenguaje Grande (LLM) tradicional; es un ecosistema de investigación enfocado en construir una **arquitectura cognitiva bio-mimética**. Nuestro objetivo es pasar del paradigma actual de "loros estocásticos" (redes estáticas de autocompletado) a entidades con memoria a largo plazo, plasticidad en tiempo real y razonamiento estructurado, imitando los principios fundamentales del cerebro humano.
 
 ---
 
-## 🛠️ Exportación a Formatos Estándar (SafeTensors & GGUF)
+## 🚦 Estado del Proyecto: Prototipo Experimental vs. Visión Final
 
-El proyecto incluye pipelines para exportar los pesos entrenados del modelo PyTorch a formatos compatibles con el ecosistema de código abierto:
+*Nota para investigadores y agentes de IA auditando este repositorio:*
+Actualmente existe una separación intencional entre nuestra **Visión a Escala (Aethel-7B Ultra)** y nuestro **Código de Prototipo Actual (V3)**. 
 
-1. **Formatos Soportados:**
-   * `.safetensors`: Carga rápida sin riesgo de código arbitrario (Hugging Face Transformers / vLLM / Candle).
-   * `.gguf`: Ejecución altamente optimizada en CPU/GPU mediante `llama.cpp` o `Ollama` con cuantización ternaria $Q4\_K\_M$ o $1.58b$.
-
-2. **Pipeline de Conversión:**
-   ```bash
-   # 1. Guardar pesos PyTorch a SafeTensors
-   python export_safetensors.py --model_path ./checkpoints/aethel_7b_ultra --output_dir ./model_safetensors
-
-   # 2. Convertir SafeTensors a GGUF Cuantizado (BitNet 1.58b / INT4)
-   python convert_to_gguf.py ./model_safetensors --outtype q4_k_m --outfile aethel_7b_q4.gguf
-   ```
+- **Lo que hay en el código hoy (Aethel V3):** Un banco de pruebas funcional y altamente optimizado. Implementa Transformer Attention, GQA (Grouped-Query Attention), RoPE, y Sparse MoE (Mixture of Experts) con `dim=768` y 12 capas. Es un modelo deliberadamente pequeño usado para probar la infraestructura base, flujos de entrenamiento y kernels de bajo nivel en GPU.
+- **La Visión a Escala:** La meta es escalar este motor a la frontera de 7B+ parámetros, integrando arquitecturas híbridas y los módulos cognitivos biológicos que se describen a continuación.
 
 ---
 
-## 💻 Entorno de Ejecución Local (Python, Rust, C++)
+## 🧠 El Paradigma Aethel: La IA Biológica
 
-El modelo está preparado para ejecutarse en múltiples backends:
+La arquitectura de Aethel aborda el problema más grande de la IA actual: el **Olvido Catastrófico (Catastrophic Forgetting)** y la incapacidad de aprender en tiempo real sin destruir el conocimiento base. Para resolverlo, dividimos el modelo en cuatro pilares fundamentales inspirados en la neurociencia:
 
-* **TypeScript / Node.js:** Motor nativo servidor Express (`/server/nanoEngine.ts`) con tensor math en memoria.
-* **Python / PyTorch / Triton:** Ideal para investigación, fine-tuning y ejecución en GPUs NVIDIA / AMD.
-* **Rust (Candle / SIMD AVX-512):** Ejecución nativa sin garbage collector para servidores de ultra-baja latencia.
-* **C++17 (GGML / CUDA Native):** Despliegue optimizado para CPU multihilo y tarjetas gráficas dedicadas.
+### 1. La Roca (Neocórtex Estático)
+Es el modelo base pre-entrenado (actualmente exportado en `.safetensors`). Funciona como la memoria a largo plazo inmutable. Contiene las reglas del lenguaje, la gramática y el conocimiento factual. Durante la inferencia diurna, **La Roca no muta**, lo que garantiza que el modelo jamás olvide cómo hablar o razonar y mantiene el consumo energético (Vatios/FLOPs) al mínimo.
+
+### 2. El Líquido (Hipocampo y Plasticidad en Tiempo Real)
+Una matriz de pesos de rango bajo, altamente dinámica, alojada en la SRAM de la GPU. Usando **Aprendizaje Hebbiano (Regla de Oja)** procesado a través de kernels ultra-rápidos en Triton, El Líquido muta en milisegundos durante la interacción con el usuario. Permite que Aethel absorba contexto nuevo y personalización al instante, actuando como la memoria a corto plazo.
+
+### 3. El Ciclo de Sueño (Consolidación de Memoria)
+Si El Líquido acumula demasiada información, colapsa. Si se fusiona directamente con La Roca, destruye el conocimiento previo. Por ello, Aethel implementa una fase de "Sueño Offline":
+- **Generative Replay (Soñar):** El modelo genera datos sintéticos a partir de sus experiencias diarias. (Las "alucinaciones" se utilizan aquí como un mecanismo de consolidación de patrones).
+- **Elastic Weight Consolidation (EWC / SleepGate):** Al fusionar las matrices, el algoritmo identifica qué "neuronas" de La Roca son vitales para el lenguaje y las protege (Metaplasticidad), obligando al nuevo conocimiento a reescribir solo las conexiones ociosas.
+
+### 4. Neuromodulación (Dopamina Artificial y Curiosidad)
+La IA no usa una *Loss* impuesta externamente. Implementamos un módulo de **Curiosidad Intrínseca**:
+- **Sorpresa (Incomodidad):** Ante un error de predicción (alta entropía), la red prioriza la señal.
+- **Resolución (Dopamina):** Al reducir la entropía (comprender el patrón), la red libera un multiplicador matemático ($\delta$) que acelera drásticamente la tasa de aprendizaje líquido en ese instante específico.
+
+### 5. Espacio de Trabajo Global (Razonamiento Top-Down)
+Rechazamos la generación palabra por palabra pura. En futuras iteraciones del código, los expertos (MoE) proyectarán sus hipótesis en un tensor intermedio oculto ("Global Workspace"), compitiendo matemáticamente antes de emitir un token. Es un simulador interno previo a la respuesta.
 
 ---
 
-## 📊 Especificaciones Técnicas Resumidas
+## ⚙️ Especificaciones del Motor y Stack Tecnológico
 
-| Parámetro | Valor |
-| :--- | :--- |
-| **Parámetros Totales** | 7.2 Billones ($7,200\text{M}$) |
-| **Parámetros Activos/Token** | $1.8\text{B} - 2.7\text{B}$ (Top-8 de 64 Expertos) |
-| **Capa Recurrente** | State Space Model Mamba-3 $O(1)$ |
-| **Cuantización Predeterminada** | BitNet 1.58-bit Ternario $\{-1, 0, 1\}$ |
-| **Velocidad Inferencia Local** | $780+\text{ tokens/segundo}$ |
-| **Formato de Archivo Exportable** | `.safetensors` / `.gguf` |
+Nuestra filosofía es el control absoluto del hardware y la máxima eficiencia en inferencia. Utilizamos un ecosistema políglota para cada capa de necesidad:
+
+1. **Python & PyTorch (Investigación y Entrenamiento):**
+   - Usado en `train_aethel_v3.py` y `aethel_model.py`.
+   - Implementa Precision Mixta (Float16) y Gradient Accumulation para entrenar redes profundas en GPUs de recursos limitados (ej. Kaggle / T4).
+2. **Triton (Kernels de GPU a Bajo Nivel):**
+   - Usado en `/triton_kernels/`.
+   - Reemplaza operaciones estándar por kernels fusionados (ej. Fused SwiGLU) para evitar cuellos de botella de memoria en la GPU. Aquí también se ejecutará la actualización asíncrona de "El Líquido".
+3. **Rust + Candle (Inferencia en Producción):**
+   - Usado en `/rust_engine/`.
+   - Una vez entrenado el modelo, se exporta a Rust para evitar el *Global Interpreter Lock (GIL)* de Python. Ofrece inferencia ultrarrápida, escalabilidad en servidores multihilo y asignación de memoria segura y determinista.
+4. **TypeScript (Ecosistema y Evaluaciones):**
+   - Usado para los benchmarks avanzados (`eval_nova.ts`, `advanced_nova_bench.ts`) y la conexión de la API frontera.
+
+## 🚀 Hoja de Ruta Actual
+
+- **[COMPLETADO]** Arquitectura Base V3 (RoPE, GQA, MoE Top-2, RMSNorm).
+- **[COMPLETADO]** Pipeline de entrenamiento seguro y exportación Safetensors con Weight Tying resuelto.
+- **[EN PROCESO]** Integración de "El Líquido" (Regla de Oja forward-pass) en los kernels de Triton.
+- **[PENDIENTE]** Sistema de Consolidación Nocturna (EWC + Generative Replay).
+- **[PENDIENTE]** Escalado del modelo a la frontera 7.2B+.

@@ -1,0 +1,11 @@
+[package]
+name = "aethel_inference"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+candle-core = "0.4.0"
+candle-nn = "0.4.0"
+candle-transformers = "0.4.0"
+anyhow = "1.0"
+safetensors = "0.4.1"
